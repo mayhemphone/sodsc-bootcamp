@@ -3,6 +3,7 @@ require('dotenv').config()
 
 // Require necessary modules
 let express = require('express')
+let layouts = require('express-ejs-layouts')
 
 // Declare Express app
 let app = express()
@@ -11,14 +12,14 @@ let app = express()
 app.set('view engine', 'ejs')
 
 // Include (use) middle ware
-
+app.use(layouts)
 
 // Include routes from controllers
 
 
 // make home route
 app.get('/', (req, res)=>{
-	res.send('STUB')
+	res.render('home')
 })
 //	listen from your port
 app.listen(process.env.PORT || 3000)
