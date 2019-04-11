@@ -2,20 +2,29 @@
 <html>
 	<head>
 		<title>Site</title>
-		 <!-- Compiled and minified CSS -->
-    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">            
+		 <!--Import Google Icon Font-->
+     	 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      	<!-- Compiled and minified CSS -->
+    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">  
+
 	</head>
 	<body>
 		<header>
 			<title></title>
 		</header>
-		<nav>
-
-		</nav>
+		
+		<%- include ./partials/nav %>
+		
 		<div class="container">
 			<%- body %>
 		</div>
 		<!-- Compiled and minified JavaScript -->
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    	<script>  
+    		document.addEventListener('DOMContentLoaded', function() {
+    			var elems = document.querySelectorAll('.sidenav');
+    			var instances = M.Sidenav.init(elems);
+ 			 });
+		</script>
 	</body>
 </html>
