@@ -1,0 +1,37 @@
+<h1>Signup</h1>
+<p>Already made an account? Go to the <a href="/auth/login"> log in page</a> instead.</p><br>
+
+<div class="row" >
+	<form class="col s12" methond ="POST" action="/auth/signup">
+
+		<div class="row">
+			<div class="input-field col s12">
+				<input placeholder="Your first Name" id="firstname" name="firstname" type="text" class="validate">
+				<label for ="firstname">First name</label>
+			</div>
+			<div class="input-field col s12">
+				<input placeholder="Your last name" id="lastname" name="lastname" type="text" class="validate">
+				<label for ="lastname">Last name</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<input placeholder="Your email" id="email" name="email" type="text" class="validate">
+				<label for ="email">Email</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s6">
+				<input placeholder="Password" id="password" name="password" type="password" class="validate">
+				<label for ="password">Password</label>
+			</div>
+			<div class="input-field col s6">
+				<input placeholder="Verify password" id="password_verify" name="password_verify" type="password" class="validate">
+				<label for ="password_verify">Verify password</label>
+			</div>
+		</div>
+		<button class="right light-blue btn waves-effect waves-light " type="submit" name="action">
+				Submit<i class="material-icons right ">send</i>
+  		</button>
+
+	</form>

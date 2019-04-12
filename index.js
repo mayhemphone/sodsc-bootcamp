@@ -13,13 +13,15 @@ app.set('view engine', 'ejs')
 
 // Include (use) middle ware
 app.use(layouts)
+app.use(express.urlencoded({ extended: false }))
 
 // Include routes from controllers
-
+app.use('/auth', require('./controllers/auth'))
 
 // make home route
 app.get('/', (req, res)=>{
 	res.render('home')
 })
+
 //	listen from your port
 app.listen(process.env.PORT || 3000)
