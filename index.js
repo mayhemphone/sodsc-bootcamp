@@ -15,6 +15,7 @@ let app = express()
 app.set('view engine', 'ejs')
 
 // Include (use) middle ware
+app.use('/', express.static('public'))
 app.use(layouts)
 
 app.use(express.urlencoded({ extended: false }))
