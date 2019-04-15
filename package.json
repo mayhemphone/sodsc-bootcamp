@@ -16,11 +16,14 @@
   "author": "Zac Wellsandt",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "dotenv": "^7.0.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-ejs-layouts": "^2.5.0",
-    "express-session": "^1.16.1"
+    "express-session": "^1.16.1",
+    "pg": "^7.9.0",
+    "sequelize": "^5.5.0"
   }
 }
