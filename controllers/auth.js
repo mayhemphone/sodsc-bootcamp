@@ -21,7 +21,15 @@ router.get('/signup', (req, res) => {
 
 router.post('/signup', (req, res) => {
 	console.log(req.body)
-	res.send('Reached the route POST to /auth/signup')
+	if (req.body.password !== req.body.password_verify) {
+		console.log('password_verify does not match')
+		req.flash('error', 'Passwords do not match')
+		res.redirect('/auth/signup')
+	} else{
+		req.flash('success', 'You successuflly created a profile')
+		res.redirect('/')
+	}
+	
 })
 
 // Export the router object so it can be used elsewhere
