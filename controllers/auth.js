@@ -34,8 +34,13 @@ router.post('/signup', (req, res) => {
 			defaults: req.body
 		})
 		.spread((user, wasCreated)=> {
-			req.flash('success', 'You successuflly created a profile')
-			res.redirect('/')	
+			if (wasCreated) {
+				req.flash('success', 'You successuflly created a profile')
+				res.redirect('/')	
+			} else {
+				req.flash('error', 'Account already exists.  Please login.')
+				res.redirect('/auth/login')
+			}
 		})
 		.catch((err) =>{
 			//print all error info to terminal (not ok for user to see)
@@ -52,6 +57,11 @@ router.post('/signup', (req, res) => {
 		res.redirect('/auth/signup')	
 		})
 	}
+})
+
+// GET /auth/logout
+router.get('/logout', (req, res) => {
+	res.send('Logout STUB')
 })
 
 // Export the router object so it can be used elsewhere
