@@ -29,6 +29,21 @@ module.exports = {
       image: {
         type: Sequelize.TEXT
       },
+      cell: {
+        type: Sequelize.INTEGER
+      },
+      address: {
+        type: Sequelize.STRING
+      },
+      scoot: {
+        type: Sequelize.STRING
+      },
+      newsletter: {
+        type: Sequelize.STRING
+      },
+      animalId: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
