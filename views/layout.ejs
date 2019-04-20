@@ -1,27 +1,20 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Site</title>
-		 <!--Import Google Icon Font-->
-     	 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      	<!-- Compiled and minified CSS -->
-    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">  
-    	<link rel="stylesheet" type="text/css" href="/style.css">
-	</head>
-	<body>
-		<header>
-			<title></title>
-		</header>
-		
-		<% include ./partials/nav %>
-		
-		<div class="container">
-			<% include ./partials/alerts%>
-			<%- body %>
-		</div>
-		<!-- Compiled and minified JavaScript -->
-    	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    	<script>
+<head>
+  <title>Brandi's Website</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+  <% include ./partials/nav %>
+  <div class="container">
+    <% include ./partials/alerts %>
+    <%- body %>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
     document.addEventListener('DOMContentLoaded', function() {
       var instancesNav = M.Sidenav.init(document.querySelectorAll('.sidenav'))
       var instancesDate = M.Datepicker.init(document.querySelectorAll('.datepicker'), {
@@ -30,9 +23,9 @@
         setDefaultDate: true,
         minDate: new Date('01/01/1920'),
         maxDate: new Date(),
-        yearRange: 40
+        yearRange: 5
       })
     })
   </script>
-	</body>
+</body>
 </html>

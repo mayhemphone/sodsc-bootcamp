@@ -1,12 +1,14 @@
 // Include .env variables
 require('dotenv').config()
 
-
 // Require necessary modules
 let express = require('express')
 let flash = require('connect-flash')
 let layouts = require('express-ejs-layouts')
 let session = require('express-session')
+
+// Include passport configuration
+let passport = require('./config/passportConfig')
 
 // Declare Express app
 let app = express()
@@ -14,37 +16,39 @@ let app = express()
 // Set view engine
 app.set('view engine', 'ejs')
 
-// Include (use) middle ware
-app.use('/', express.static('public'))
+// Include (use) middleware
+app.use('/', express.static('static'))
 app.use(layouts)
-
 app.use(express.urlencoded({ extended: false }))
 app.use(session({
-	secret: process.env.SESSION_SECRET,
-	resave: false,
-	saveUninitialized: true
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
 }))
 app.use(flash())
+app.use(passport.initialize())
+app.use(passport.session())
 
-//custom middleware - write data to locals
-app.use((req, res, next) =>{
-	res.locals.alerts = req.flash()
-	next()
+// Custom middleware - write data to locals on EVERY page
+app.use((req, res, next) => {
+  res.locals.alerts = req.flash()
+  res.locals.user = req.user
+  next()
 })
 
 // Include routes from controllers
 app.use('/auth', require('./controllers/auth'))
 app.use('/profile', require('./controllers/profile'))
 
-// make home route
-app.get('/', (req, res)=>{
-	res.render('home')
+// Make a home route: GET /
+app.get('/', (req, res) => {
+  res.render('home')
 })
 
-// catch-all route - render the 404 page
-app.get('*', (req,res)=>{
-	res.render('404')
+// Catch-all route - render the 404 page
+app.get('*', (req, res) => {
+  res.render('404')
 })
 
-//	listen from your port
+// Listen from your port
 app.listen(process.env.PORT || 3000)

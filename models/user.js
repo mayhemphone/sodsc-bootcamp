@@ -1,4 +1,5 @@
-'use strict';
+'use strict'
+
 let bcrypt = require('bcryptjs')
 
 module.exports = (sequelize, DataTypes) => {
@@ -8,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Please provide your name.'
+          msg: 'Please provide your name!'
         }
       }
     },
@@ -16,47 +17,76 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       validate: {
-          isEmail: {
-            msg:'Please provide a valid email address.'
-          }
+        isEmail: {
+          msg: 'Hey, please give me a valid email address!'
+        }
       }
     },
     password: {
-     type: DataTypes.STRING,
-     validate: {
-      len: {
-        args: [8, 32],
-        msg: 'Your password must be between 8 and 32 characters in length.'
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [8, 32],
+          msg: 'Your password must be between 8 and 32 characters in length.'
         }
-     }
-   },
+      }
+    },
     birthdate: DataTypes.DATE,
     bio: DataTypes.TEXT,
     image: {
       type: DataTypes.TEXT,
       validate: {
-        isURL: {
-          msg: 'Please provide a URL to your profile picture.'
+        isUrl: {
+          msg: 'Aww, no pic? :('
+        }
+      }
+    },
+    admin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    facebookId: DataTypes.STRING,
+    facebookToken: DataTypes.STRING
+  }, {
+    hooks: {
+      beforeCreate: (pendingUser) => {
+        if(pendingUser && pendingUser.password) {
+          // hash the password before it goes into user table
+          let hash = bcrypt.hashSync(pendingUser.password, 12)
+
+          // Reassign the password to the hashed value
+          pendingUser.password = hash
         }
       }
     }
-  }, { 
-    hooks: {
-      beforeCreate: (pendingUser) => {
-        if (pendingUser && pendingUser.password) {
+  })
 
-          // hash the password before it goes into the user table
-          let hash = bcrypt.hashSync(pendingUser.password, 12)
-          pendingUser.password = hash
-
-        }
-      }
-  }
-})
-  
   user.associate = function(models) {
     // associations can be defined here
-  };
-  
-  return user;
-};
+  }
+
+  user.prototype.validPassword = function(typedInPassword) {
+    return bcrypt.compareSync(typedInPassword, this.password)
+  }
+
+  return user
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

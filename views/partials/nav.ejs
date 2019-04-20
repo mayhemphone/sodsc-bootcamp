@@ -1,19 +1,31 @@
- <nav>
-    <div class="nav-wrapper light-blue">
-      <a href="#!" class="brand-logo">MAY-FB</a>
+  <nav>
+    <div class="nav-wrapper deep-purple">
+      <a href="/" class="brand-logo">BB</a>
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="/auth/login">Login</a></li>
-        <li><a href="/auth/signup">Signup</a></li>
-        <li><a href="/profile">Profile</a></li>
-        <li><a href="/auth/logout">Logout</a></li>
+        <% if(!user) { %>
+          <li><a href="/auth/login">Log In</a></li>
+          <li><a href="/auth/signup">Sign Up</a></li>
+        <% } else { %>
+          <% if(user.admin) { %>
+            <li><a href="/profile/admin">Admin</a></li>
+          <% } %>
+          <li><a href="/profile">Profile</a></li>
+          <li><a href="/auth/logout">Logout</a></li>
+        <% } %>
       </ul>
     </div>
   </nav>
 
   <ul class="sidenav" id="mobile-demo">
-    <li><a href="/auth/login">Login</a></li>
-    <li><a href="/auth/signup">Components</a></li>
-    <li><a href="/profile">Profile</a></li>
-    <li><a href="/auth/logout">Logout</a></li>
+    <% if(!user) { %>
+      <li><a href="/auth/login">Log In</a></li>
+      <li><a href="/auth/signup">Sign Up</a></li>
+    <% } else { %>
+      <% if(user.admin) { %>
+        <li><a href="/profile/admin">Admin</a></li>
+      <% } %>
+      <li><a href="/profile">Profile</a></li>
+      <li><a href="/auth/logout">Logout</a></li>
+    <% } %>
   </ul>
