@@ -14,4 +14,4 @@ router.get('/', (req,res)=> {
 })
 
 // EXPORT the routes form this file
-model.exports = router
+module.exports = router
