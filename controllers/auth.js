@@ -75,7 +75,7 @@ router.post('/signup', (req, res, next) => {
 // GET /auth/logout
 router.get('/logout', (req, res) => {
   req.logout() // Delete the session data for logged in user
-  req.flash('success', 'Goodbye - see ya next time! ❤️')
+  req.flash('success', 'Goodbye!')
   res.redirect('/')
 })
 
