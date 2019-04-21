@@ -13,12 +13,12 @@ let loggedIn = require('../middleware/loggedIn')
 
 // GET /content
 router.get('/', (req, res) => {
-	db.content.findAll()
-	.then((content)=>{
-		 res.render('content/index', { content: content })
+	db.merch.findAll()
+	.then((merch)=>{
+		 res.render('merch/index', { merch: merch })
 	})
 	.catch((err) => {
-	    console.log('Error in POST /reviews', err)
+	    console.log('Error in POST /merch', err)
 	    res.render('main/404')
 	  })
 })
@@ -26,22 +26,25 @@ router.get('/', (req, res) => {
 // GET /merch/new - display form for creating new articles
 router.get('/new', (req, res) =>{
 
-	res.render('content/new')
+	res.render('merch/new')
 })
 
 router.get('/:id', (req, res) => {
-	db.content.findOne({
+	db.merch.findOne({
 		where: {id: req.params.id }
 	})
-	.then((content)=>{
-		if (!content) throw Error()
-		res.render('content/show', {content: content})
+	.then((merch)=>{
+		if (!merch) throw Error()
+		res.render('merch/show', {merch: merch})
 	})
 	.catch((err) => {
 	    console.log('Error in POST /reviews', err)
 	    res.status(400).render('main/404')
 	  })
 })
+
+
+
 
 
 // Export the routes from this file

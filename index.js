@@ -40,6 +40,7 @@ app.use((req, res, next) => {
 app.use('/auth', require('./controllers/auth'))
 app.use('/profile', require('./controllers/profile'))
 app.use('/content', require('./controllers/content'))
+app.use('/merch', require('./controllers/merch'))
 
 // Make a home route: GET /
 app.get('/', (req, res) => {
