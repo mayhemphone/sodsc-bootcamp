@@ -1,0 +1,15 @@
+<!-- display all news / upcoming stuff -->
+
+<h1>SODSC</h1>
+<div class="row">
+	<div class="col sm-12">
+		<% content.forEach((c)=>{%>
+			<div class="row">
+				<div class="col sm-12">
+					<h1><%= c.title %></h1>
+					<small><%=c.description%></small>
+				</div>
+			</div>
+		<%})%>
+	</div>
+</div>

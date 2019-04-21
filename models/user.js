@@ -33,13 +33,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     birthdate: DataTypes.DATE,
     bio: DataTypes.TEXT,
+    cell: DataTypes.STRING,
+    scoot: DataTypes.STRING,
+    newsletter: DataTypes.STRING,
+    animalId: DataTypes.INTEGER,
     image: {
       type: DataTypes.TEXT,
-      validate: {
-        isUrl: {
-          msg: 'Aww, no pic? :('
-        }
-      }
+      defaultValue: '/img/user_anon.png'
     },
     admin: {
       type: DataTypes.BOOLEAN,

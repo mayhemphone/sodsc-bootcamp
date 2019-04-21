@@ -39,6 +39,7 @@ app.use((req, res, next) => {
 // Include routes from controllers
 app.use('/auth', require('./controllers/auth'))
 app.use('/profile', require('./controllers/profile'))
+app.use('/content', require('./controllers/content'))
 
 // Make a home route: GET /
 app.get('/', (req, res) => {
