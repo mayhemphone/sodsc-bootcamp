@@ -7,6 +7,8 @@ let flash = require('connect-flash')
 let layouts = require('express-ejs-layouts')
 let session = require('express-session')
 
+
+
 // Include passport configuration
 let passport = require('./config/passportConfig')
 
@@ -42,6 +44,7 @@ app.use('/profile', require('./controllers/profile'))
 app.use('/content', require('./controllers/content'))
 app.use('/merch', require('./controllers/merch'))
 
+
 // Make a home route: GET /
 app.get('/', (req, res) => {
   res.render('home')
@@ -54,3 +57,5 @@ app.get('*', (req, res) => {
 
 // Listen from your port
 app.listen(process.env.PORT || 3000)
+
+

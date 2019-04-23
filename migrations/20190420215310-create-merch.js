@@ -17,7 +17,7 @@ module.exports = {
       sex: {
         type: Sequelize.STRING
       },
-      inventoryId: {
+      price: {
         type: Sequelize.INTEGER
       },
       collection: {
@@ -26,10 +26,6 @@ module.exports = {
       pre_order: {
         type: Sequelize.STRING
       },
-      members_only: {
-        type: Sequelize.BOOLEAN,
-        default: false
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -37,6 +33,24 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      members_only: {
+        type: Sequelize.BOOLEAN,
+        default: false
+      },
+      active: {
+        default: false,
+        type: Sequelize.BOOLEAN        
+      },
+      img_1: {
+        allowNull:false,
+        type: Sequelize.STRING
+      },
+      img_2: {
+        type: Sequelize.STRING
+      },
+      img_3: {
+        type: Sequelize.STRING
       }
     });
   },

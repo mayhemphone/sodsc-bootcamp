@@ -1,0 +1,97 @@
+<h1>Manage Inventory</h1>
+
+<!-- show all merch items, add size:textboxforcount-->
+<div class="row">
+	<div class="col s12">
+		<table class="striped ">
+			<thead>
+			  <tr>
+	  		  	  <th>Active</th>
+			      <th>Img_1</th>
+			      <th>Name</th>
+			      <th>Color</th>
+			      <th>Collection</th>
+			      <th>Category</th>
+			      <th>S</th>
+			      <th>M</th>
+			      <th>L</th>
+			      <th>XL</th>
+			      <th>Price</th>
+			      <th>Pre-Order</th>
+			      <th>Members</th>
+			      <th>Update</th>
+
+			  </tr>
+			</thead>
+			<tbody>
+				<% merch.forEach((merch)=> { %>
+					<tr>
+						<td>
+							<label>
+				              <input class="filled-in" name="active" value ="active" type="checkbox" <%if (merch.active == true){%>checked<%}%>/>
+				              <span></span>
+				            </label>
+						</td>
+						<td><img style="max-height:100px;"src="<%= merch.img_1 %>"></td>
+						<td><strong><%= merch.item %></strong></td>
+						<td><div style="width:20px;height:20px;border:1px solid black;background-color:<%= merch.color %>;border-radius: 3px;"></div></td>
+						<td><%= merch.collection %></td>
+						<td><%= merch.category %></td>
+						<% console.log(merch.one_size)%>
+						<% if (merch.one_size == false){ %>
+							<td>
+							    <div class="input-field" style="width:2em;">
+							      <input value="0" id="first_name2" type="number" class="validate">
+							    </div>
+							</td>
+							<td>
+							    <div class="input-field" style="width:2em;">
+							      <input value="0" id="first_name2" type="number" class="validate">
+							    </div>
+							</td>
+							<td>
+							    <div class="input-field" style="width:2em;">
+							      <input value="0" id="first_name2" type="number" class="validate">
+							    </div>
+							</td>
+							<td>
+							    <div class="input-field" style="margin-left:0;width:2em;">
+							      <input value="0" id="first_name2" type="number" class="validate">
+							    </div>
+							</td>
+							<% } else { %>
+								<td>
+								    <div class="input-field" style="width:2em;">
+								      <input value="0" id="first_name2" type="number" class="validate">
+								    </div>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							<% } %>
+						<td>
+							$<%= merch.price/100 %>
+						</td>
+						<td>
+							<label>
+				              <input class="filled-in" type="checkbox" />
+				              <span></span>
+				            </label>
+						</td>
+						<td>
+							<label>
+				              <input class="filled-in" type="checkbox" />
+				              <span></span>
+				            </label>
+						</td>
+						<td>	
+							<button class="left btn-floating waves-effect waves-light blue-grey right" type="submit">
+								 <i class="material-icons right">sync</i>
+    						</button>
+        				</td>
+					</tr>
+				<% }) %>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -45,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
+    member: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     facebookId: DataTypes.STRING,
     facebookToken: DataTypes.STRING
   }, {

@@ -3,66 +3,98 @@
     <h1>Create Merch Item</h1>
   </div>
 </div>
-
-
  <div class="row">
-    <form class="col s12">
+    <form class="col s12" action="/merch" method="POST">
       <div class="row">
-        <div class="input-field col s12">
-          <input id="item_name" type="text" class="validate">
+        <div class="input-field col s10">
+          <input id="item" name="item" type="text" class="validate">
           <label for="item_name">Item Name</label>
+        </div>
+        <div class="input-field col s2">
+          <input id="price" name="price" type="text" class="validate">
+          <label for="price">Price (in cents)</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input id="category" type="text" class="validate">
+          <input id="category" name="category" type="text" class="validate">
           <label for="category">Category</label>
         </div>
         <div class="input-field col s6">
-          <input id="collection" type="text" class="validate">
+          <input id="collection" name="collection" type="text" class="validate">
           <label for="collection">Collection</label>
         </div>
       </div>
       <div class="row">
+        <div class="input-field col s8">
+          <input id="color" name="color" type="text" class="validate">
+          <label for="color">Color</label>
+        </div>
         <div class="input-field col s4">
-            <input id="img_1" name="pre_order" type="url" class="validate" >
-            <label for="pre_order">Image URL</label>
-          </div>
-          <div class="input-field col s4">
-            <input id="img_2" name="pre_order" type="url" >
-            <label for="pre_order">Image URL</label>
-          </div>
-          <div class="input-field col s4">
-            <input id="img_3" name="pre_order" type="url" >
-            <label for="pre_order">Image URL</label>
-          </div>
+          <span style="margin-right:1em;">
+            <label>
+              <input name="sex" value="m" type="radio" checked />
+              <span>Male</span>
+            </label>
+          </span>
+          <span style="margin-right:1em;">
+            <label>
+              <input name="sex" value="f" type="radio" />
+              <span>Female</span>
+            </label>
+          </span>
+        </div>
       </div>
       <div class="row">
           <div class="input-field col s12">
-            <textarea id="textarea2" class="materialize-textarea" data-length="400"></textarea>
-            <label for="textarea2">Textarea</label>
+            <textarea id="description" name="description" class="materialize-textarea" data-length="400"></textarea>
+            <label for="description">Description</label>
           </div>
       </div>
+      <div class="row">
+          <!-- cloudinary widget -->
+          <div class="input-field col s12">
+              <button class="btn waves-effect waves-light grey darken-3" type="button" id="upload_widget_opener">Upload up to 3 images
+              <i class="material-icons right">add_a_photo</i></button>
+            </div>
+          </div>
+          <div class="row">
+            <!-- image urls box -->
+              <div class="card-panel grey lighten-3 col s12">
+                <label>Image 1</label>
+                  <input name="img_1" type="text" placeholder="Image URL" id="img_1"/> <img class="materialboxed" width="100" id="r_img_1" src="">
+                <label>Image 2</label>
+                  <input name="img_2" type="text" placeholder="Image URL" id="img_2"/> <img class="materialboxed" width="100" id="r_img_2" src="">
+                <label>Image 3</label>
+                  <input name="img_3" type="text" placeholder="Image URL" id="img_3"/> <img class="materialboxed" width="100" id="r_img_3" src="">
+              </div>
+          </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="pre_order" name="pre_order" type="text" placeholder="Enter release date">
+            <input id="pre_order" name="pre_order" type="text" placeholder="Enter release date: MM/DD/YY">
             <label for="pre_order">Pre-Order?</label>
           </div>
         </div>
         <div class="row">
-          <div class="col s4">
+          <div class="col s3">
             <label>
-              <input type="checkbox" />
+              <input name="one_size" type="checkbox" />
+              <span>One Size</span>
+            </label>
+          </div>
+          <div class="col s3">
+            <label>
+              <input name="members_only" type="checkbox" />
               <span>Members Only</span>
             </label>
           </div>
-          <div class="col s4">
+          <div class="col s3">
             <label>
-              <input type="checkbox" />
+              <input name="active" type="checkbox" />
               <span>Active</span>
             </label>
           </div>
-          <div class="col s4">
+          <div class="col s3">
             <button class="btn waves-effect waves-light grey darken-3 right" type="submit">Create
               <i class="material-icons right">add_circle_outline</i>
             </button>
@@ -70,3 +102,29 @@
         </div>
     </form>
   </div>
+<script>
+    document.getElementById("upload_widget_opener").addEventListener("click", function() {
+      console.log('clicked')
+        cloudinary.openUploadWidget({ cloud_name: 'mayhemphone', upload_preset: 'sodsc-unsigned', folder: 'sodsc-dev/merch'},
+                function(error, result) {
+                    console.log(error, result)
+                    // Push URL into text input
+                    if(result){
+                      for (var i=0;i<result.length;i++){
+                        u = 'img_'+(i+1)
+                        console.log(u)
+                        if (document.getElementById(u)) {
+                          document.getElementById(u).value = result[i].url;
+                          document.getElementById('r_'+u).src = result[i].url;
+                        } else{
+                        alert("you can only upload 3 images")
+                        }
+                      }
+                    } else {
+                      console.log('no result')
+                    }
+                
+                });
+
+    }, false);
+</script>

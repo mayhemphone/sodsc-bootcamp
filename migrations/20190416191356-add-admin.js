@@ -12,3 +12,8 @@ module.exports = {
     return queryInterface.removeColumn('users', 'admin')
   }
 };
+
+
+//sequelize migration:create --name add-admin 
+// then modify the file like this one
+// then run sequelize db:migrate
