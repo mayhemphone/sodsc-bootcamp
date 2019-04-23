@@ -18,6 +18,8 @@ let loggedIn = require('../middleware/loggedIn')
 
 // POST /articles - create a new post
 router.post('/', function(req, res) {
+  
+  // create merch item
   db.merch.create({
     item: req.body.item,
     category: req.body.category,
@@ -31,8 +33,46 @@ router.post('/', function(req, res) {
     price: req.body.price,
     active: req.body.active,
     color: req.body.color,
-    one_size: req.body.one_size
+    no_size: req.body.no_size
   })
+	.then(merch=>{
+		
+	    // so relationships can be made
+	    
+		if ( merch.no_size == true ) {
+				// create 0 inventory records for s, m, l, xl
+			db.inventory.create({
+			  	merchId: merch.id,
+			  	size: 'none'
+		 	})
+
+		} else {
+
+			let defaultSizes = ['x-small','small','medium','large','x-large','xx-large']
+			console.log(defaultSizes)
+		    async.forEach(defaultSizes, (cat, done) => {
+		      db.inventory.create({
+		      		merchId: merch.id,
+		      		size: cat
+		      })
+		      .spread((inventory, wasCreated) => {
+		        merch.addInventory(inventory)
+		        .then(() => {
+		          // res.redirect, or whatevs
+		          console.log('done adding', cat)
+		          done()
+		        })
+		      })
+
+
+
+		    }, () => {
+		      console.log('EVERYTHING is done. Now redirect or something')
+		      res.redirect('/')
+		    })	  
+			} //close if / else statement
+		})
+
   .then(function(merch) {
    
       console.log('EVERYTHING is done. Now redirect or something')
@@ -49,7 +89,7 @@ router.post('/', function(req, res) {
 router.get('/', (req, res) => {
 	db.merch.findAll()
 	.then((merch)=>{
-		 res.render('merch/index', { merch: merch })
+		 res.render('merch/index', { merch: merch})
 	})
 	.catch((err) => {
 	    console.log('Error in POST /merch', err)
@@ -65,7 +105,7 @@ router.get('/new',  (req, res) =>{
 
 // GET /merch/inventory
 router.get('/inventory', (req, res) => {
-	db.merch.findAll()
+	db.merch.findAll({ include:[ db.inventory]} )
 	.then((merch)=>{
 		 res.render('merch/inventory', { merch: merch })
 	})

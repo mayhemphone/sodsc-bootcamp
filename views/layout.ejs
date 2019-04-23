@@ -14,8 +14,25 @@
     <%- body %>
   </div>
 <% include ./partials/footer %>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript">  </script>
   <% include ./partials/scripts %>
+  
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        let instancesNav = M.Sidenav.init(document.querySelectorAll('.sidenav'));
+      let instancesDate = M.Datepicker.init(document.querySelectorAll('.datepicker'), {
+        autoClose: false,
+        minDate: new Date('01/01/1900'),
+        maxDate: new Date(),
+        yearRange: [1920, 2019]
+      })
+
+    })
+    $(document).ready(function(){
+      $('.modal').modal();
+    });
+  </script>
 </body>
 </html>

@@ -12,15 +12,11 @@
 			      <th>Color</th>
 			      <th>Collection</th>
 			      <th>Category</th>
-			      <th>S</th>
-			      <th>M</th>
-			      <th>L</th>
-			      <th>XL</th>
+			      <th>Sizes/Count</th>
 			      <th>Price</th>
 			      <th>Pre-Order</th>
 			      <th>Members</th>
 			      <th>Update</th>
-
 			  </tr>
 			</thead>
 			<tbody>
@@ -28,7 +24,7 @@
 					<tr>
 						<td>
 							<label>
-				              <input class="filled-in" name="active" value ="active" type="checkbox" <%if (merch.active == true){%>checked<%}%>/>
+				              <input class="filled-in blue-grey" name="active" value ="active" type="checkbox" <%if (merch.active == true){%>checked<%}%>/>
 				              <span></span>
 				            </label>
 						</td>
@@ -37,37 +33,55 @@
 						<td><div style="width:20px;height:20px;border:1px solid black;background-color:<%= merch.color %>;border-radius: 3px;"></div></td>
 						<td><%= merch.collection %></td>
 						<td><%= merch.category %></td>
-						<% console.log(merch.one_size)%>
-						<% if (merch.one_size == false){ %>
+						<% console.log(merch.no_size)%>
+						<% if (merch.no_size == false){ %>
 							<td>
-							    <div class="input-field" style="width:2em;">
-							      <input value="0" id="first_name2" type="number" class="validate">
+							<!-- draw button to open sizes modal -->
+							 <!-- Modal Trigger -->
+							  <a class="waves-effect waves-light btn modal-trigger blue-grey" href="#<%=merch.id%>">&nbsp;Sizes&nbsp;</a>
+
+							  <!-- Modal Structure -->
+							  <div id="<%=merch.id%>" class="modal modal-fixed-footer">
+							    <div class="modal-content">
+						    	<!-- start modal content -->
+							      <h4>Update count per size:</h4><br>
+							      <% merch.inventories.forEach((inv)=>{ %>
+								      <form >
+								      <div class="row">
+								        <div class="input-field col s6 offset-s3">
+								          <input id="<%=inv.size%>" value="<%=inv.count%>" name="category" type="number" class="validate">
+								          <label for="category"><%=inv.size%></label>
+								        </div>
+								      </div>
+								   <% }) %>
+								</div>
+								<!-- end modal content -->
+								<div class="modal-footer">
+							      <button href="#<%=merch.id%>" class="modal-close waves-effect waves-green btn-flat">Save</button>
+							 	 </form>
 							    </div>
+							  </div>
 							</td>
-							<td>
-							    <div class="input-field" style="width:2em;">
-							      <input value="0" id="first_name2" type="number" class="validate">
-							    </div>
-							</td>
-							<td>
-							    <div class="input-field" style="width:2em;">
-							      <input value="0" id="first_name2" type="number" class="validate">
-							    </div>
-							</td>
-							<td>
-							    <div class="input-field" style="margin-left:0;width:2em;">
-							      <input value="0" id="first_name2" type="number" class="validate">
-							    </div>
-							</td>
+							
 							<% } else { %>
+
 								<td>
-								    <div class="input-field" style="width:2em;">
-								      <input value="0" id="first_name2" type="number" class="validate">
-								    </div>
+								<!-- draw button to open sizes modal -->
+								 <!-- Modal Trigger -->
+								  <a class="waves-effect waves-light btn modal-trigger blue-grey" href="#modal-<%=merch.id%>">Count</a>
+
+								  <!-- Modal Structure -->
+								  <div id="modal-<%=merch.id%>" class="modal modal-fixed-footer">
+								    <div class="modal-content">
+								      <h4>Update count: </h4>
+								      
+								   		<div class="input-field">
+									    	<input value="0" id="first_name2" type="number" class="validate">
+									    </div>
+								  </div>
 								</td>
-								<td></td>
-								<td></td>
-								<td></td>
+							
+
 							<% } %>
 						<td>
 							$<%= merch.price/100 %>

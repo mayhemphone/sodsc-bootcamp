@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   inventory.associate = function(models) {
     // associations can be defined here
+    models.inventory.belongsTo(models.merch)
   };
   return inventory;
 };
