@@ -29,6 +29,45 @@ router.get('/new', (req, res) =>{
 	res.render('content/new')
 })
 
+
+
+
+
+// POST /merch - create a new post
+router.post('/', function(req, res) {
+  
+  // create merch item
+  db.content.create({
+    title: req.body.title,
+    meat: req.body.meat,
+    description: req.body.description,
+    featured: req.body.featured
+  })
+
+  .then((content)=> {
+   
+      // console.log('EVERYTHING is done. Now redirect or something')
+      res.render('content/new')
+    })
+
+  .catch(function(error) {
+    // console.log('Error in POST /merch', error)
+    res.status(400).render('404')
+  })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+// needs to be below others so it doesn't catch them too
 router.get('/:id', (req, res) => {
 	db.content.findOne({
 		where: {id: req.params.id }

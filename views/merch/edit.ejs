@@ -1,11 +1,17 @@
 <div class="row">
   <div class="col s12">
     <h1>Edit Merch Item</h1>
+    <a href="/merch/inventory"><-- Back to Inventory</a>
   </div>
 </div>
  <div class="row">
     <form class="col s12" method="POST" action="/merch/<%=merch.id%>?_method=PUT">
+    	<!-- start hidden -->
+    	<input id="no_size_current" hidden="true" name="no_size_current" type="text" class="validate" value="<%= merch.no_size %>">
+
     	<input id="item" hidden="true" name="id" type="text" class="validate" value="<%= merch.id %>">
+
+    	<!-- end hidden items -->
       <div class="row">
         <div class="input-field col s10">
           <input id="item" name="item" type="text" class="validate" value="<%= merch.item %>">
@@ -34,19 +40,19 @@
         <div class="input-field offset-s1 col s5">
           <span style="margin-right:1em;">
             <label>
-              <input name="sex" value="u" type="radio" checked />
+              <input name="sex" value="u" type="radio" <% if(merch.sex == 'u'){ %>checked<% }%>/>
               <span>Unisex</span>
             </label>
           </span>
           <span style="margin-right:1em;">
             <label>
-              <input name="sex" value="m" type="radio" />
+              <input name="sex" value="m" type="radio" <% if(merch.sex == 'm'){ %>checked<% }%>/>
               <span>Male</span>
             </label>
           </span>
           <span style="margin-right:1em;">
             <label>
-              <input name="sex" value="f" type="radio" />
+              <input name="sex" value="f" type="radio" <% if(merch.sex == 'f'){ %>checked<% }%>/>
               <span>Female</span>
             </label>
           </span>
@@ -85,19 +91,19 @@
         <div class="row">
           <div class="col s3">
             <label>
-              <input name="no_size" type="checkbox" />
+              <input name="no_size" type="checkbox"<% if(merch.no_size ==true){ %>checked<% }%> />
               <span>No Size</span>
             </label>
           </div>
           <div class="col s3">
             <label>
-              <input name="members_only" type="checkbox" />
+              <input name="members_only" type="checkbox" <% if(merch.members_only ==true){ %>checked<% }%>/>
               <span>Members Only</span>
             </label>
           </div>
           <div class="col s3">
             <label>
-              <input name="active" type="checkbox" />
+              <input name="active" type="checkbox" <% if(merch.active ==true){ %>checked<% }%>/>
               <span>Active</span>
             </label>
           </div>

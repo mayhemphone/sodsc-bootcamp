@@ -41,16 +41,16 @@ router.post('/', function(req, res) {
 	    // so relationships can be made
 	    
 		if ( merch.no_size == true ) {
-				// create 0 inventory records for s, m, l, xl
+			// create 0 inventory record for none
 			db.inventory.create({
 			  	merchId: merch.id,
 			  	size: 'none'
 		 	})
 
 		} else {
-
+			// create 0 inventory record for default sizes
 			let defaultSizes = ['x-small','small','medium','large','x-large','xx-large']
-			console.log(defaultSizes)
+			// console.log(defaultSizes)
 		    async.forEach(defaultSizes, (cat, done) => {
 		      db.inventory.create({
 		      		merchId: merch.id,
@@ -60,7 +60,7 @@ router.post('/', function(req, res) {
 		        merch.addInventory(inventory)
 		        .then(() => {
 		          // res.redirect, or whatevs
-		          console.log('done adding', cat)
+		          // console.log('done adding', cat)
 		          done()
 		        })
 		      })
@@ -68,7 +68,7 @@ router.post('/', function(req, res) {
 
 
 		    }, () => {
-		      console.log('EVERYTHING is done. Now redirect or something')
+		      // console.log('EVERYTHING is done. Now redirect or something')
 		      res.redirect('/')
 		    })	  
 			} //close if / else statement
@@ -76,13 +76,13 @@ router.post('/', function(req, res) {
 
   .then(function(merch) {
    
-      console.log('EVERYTHING is done. Now redirect or something')
+      // console.log('EVERYTHING is done. Now redirect or something')
       res.render('merch/new')
     })
 
   .catch(function(error) {
-    console.log('Error in POST /merch', error)
-    res.status(400).render('main/404')
+    // console.log('Error in POST /merch', error)
+    res.status(400).render('404')
   })
 })
 
@@ -93,8 +93,8 @@ router.get('/', (req, res) => {
 		 res.render('merch/index', { merch: merch})
 	})
 	.catch((err) => {
-	    console.log('Error in POST /merch', err)
-	    res.render('main/404')
+	    // console.log('Error in POST /merch', err)
+	    res.render('404')
 	  })
 })
 
@@ -111,65 +111,13 @@ router.get('/inventory', (req, res) => {
 		 res.render('merch/inventory', { merch: merch })
 	})
 	.catch((err) => {
-	    console.log('Error in GET /merch/inventory', err)
-	    res.render('/404')
+	    // console.log('Error in GET /merch/inventory', err)
+	    res.render('404')
 	  })
 })
 
-router.put('/:id', (req,res)=>{
-  console.log('Reached PUT route')
-  console.log('---------req.body.item:',req.body.item)
-  db.merch.update(
-  {
-  	id: req.body.id,
-    item: req.body.item,
-    category: req.body.category,
-    sex: req.body.sex,
-    collection: req.body.collection,
-    pre_order: req.body.pre_order,
-    members_only: req.body.members_only,
-    img_1: req.body.img_1,
-    img_2: req.body.img_2,
-    img_3: req.body.img_3,
-    price: req.body.price,
-    active: req.body.active,
-    color: req.body.color,
-    no_size: req.body.no_size,
-    desc: req.body.desc
-  },
-    { where: {id: req.params.id} }
-  )
-  .then((updatedRows)=>{
-    console.log('success', updatedRows)
-    res.redirect('/merch/' + req.params.id)
-  })
-  .catch((err) => {
-      console.log('Error in PUT /:id', err)
-      res.render('404')
-    })
-})
-
-router.get('/:id', (req,res)=>{
-  console.log('Reached get route')
-
-	db.merch.findOne({
-	    where: { id: req.params.id },
-	    include: [db.inventory]
-	  })
-    .then(function(merch) {
-  		console.log('found:', merch)
-	    if (!merch) throw Error()
-	    res.render('merch/edit', { merch: merch })
-  })
-
-  .catch((err) => {
-        console.log('Error in POST /reviews', err)
-        res.render('404')
-    })
-})
-
+//INVENTORY EDIT PUT
 router.put('/inventory', (req,res)=>{
-  console.log('Reached PUT route')
 
   // TODO
   // COME BACK AND MAKE THIS A LOOP YOU LAZY FUCK.
@@ -216,18 +164,143 @@ router.put('/inventory', (req,res)=>{
 		}
 	})
 
-	// db.inventory.update({ count : '666' },{ where : { merchId : 4 }}) 
-
-
-  .then((updatedRows)=>{
-    console.log('success', updatedRows)
-    // res.redirect('/merch/inventory')
-  })
-  .catch((err) => {
-      console.log('Error in POST /reviews', err)
+    .then((updatedRows)=>{
+    // console.log('success', updatedRows)
+    res.redirect('/merch/inventory')
+	})
+    .catch((err) => {
+      // console.log('Error in POST /reviews', err)
       res.render('404')
     })
 })
+
+// SINGLE MERCH EDIT PUT
+
+router.put('/:id', (req,res)=>{
+  
+  // check values for undefined, and store proper true / false values - 
+  //need to change these from doing strings to true booleans
+  let active1 = !req.body.active ? 'false' : 'true';
+  let members_only1 = !req.body.members_only ? 'false' : 'true';
+  let no_size1 = req.body.no_size==undefined ? 'false' : 'true';
+  let no_size1_current = req.body.no_size_current
+
+	console.log('')
+	console.log('')
+	console.log('no_size1_current:',no_size1_current)
+	console.log('')
+	console.log('no_size1:',no_size1)
+	console.log('')
+
+	// check to see if this is different than what's in the db
+	if (no_size1_current != no_size1){
+		// if becoming no_size, then delete sizes and create 'none' 
+		console.log('')
+		console.log('************ CHANGE************')
+		console.log('')
+		if (no_size1 == 'true' ) {
+			
+			console.log('')
+			console.log('IF - if no_size1:',no_size1)
+			console.log('')
+			console.log('************DELETE OLD SIZE RECORDS, MAKE NONE RECORD************')
+			console.log('')
+
+			// delete old size records
+			db.inventory.destroy({
+			    where: {
+			        merchId: req.body.id
+			    }
+			})
+
+			// make new 'none' record
+			db.inventory.create({
+			  	merchId: req.body.id,
+			  	size: 'none'
+		 	})
+
+		} else {
+
+			// delete old 'none' record
+			console.log('')
+			console.log('ELSE - if no_size1:',no_size1)
+			console.log('')
+				console.log('************DELETE OLD NONE RECORD, MAKE SIZE RECORDS************')
+				console.log('')
+				let theId = req.body.id
+				db.inventory.destroy({
+				    where: {
+				        merchId: req.body.id
+				    }
+				})
+
+			// make new size records
+			let defaultSizes = ['x-small','small','medium','large','x-large','xx-large']
+
+		    async.forEach(defaultSizes, (cat, done) => {
+		      db.inventory.create({
+		      		merchId: req.body.id,
+		      		size: cat
+		      })
+		    })
+		}
+		
+
+	} else {
+		// nothing changes
+		console.log('')
+		console.log('************NO CHANGE************')
+		console.log('')
+	}
+	//now do the merch database update
+  db.merch.update(
+  {
+  	id: req.body.id,
+    item: req.body.item,
+    category: req.body.category,
+    sex: req.body.sex,
+    collection: req.body.collection,
+    pre_order: req.body.pre_order,
+    members_only: members_only1,
+    img_1: req.body.img_1,
+    img_2: req.body.img_2,
+    img_3: req.body.img_3,
+    price: req.body.price,
+    active: active1,
+    color: req.body.color,
+    no_size: no_size1,
+    desc: req.body.desc
+  },
+    { where: {id: req.params.id} }
+  )
+  .then((updatedRows)=>{
+    // console.log('success', updatedRows)
+    res.redirect('/merch/' + req.params.id)
+  })
+  .catch((err) => {
+      // console.log('Error in PUT /:id', err)
+      res.render('404')
+    })
+})
+
+router.get('/:id', (req,res)=>{
+  // console.log('Reached get route')
+
+	db.merch.findOne({
+	    where: { id: req.params.id },
+	    include: [db.inventory]
+	})
+    .then(function(merch) {
+  		// console.log('found:', merch)
+	    if (!merch) throw Error()
+	    res.render('merch/edit', { merch: merch })
+  	})
+    .catch((err) => {
+        // console.log('Error in POST /reviews', err)
+        res.render('404')
+    })
+})
+
 
 
 router.get('/:id', (req, res) => {
@@ -239,8 +312,7 @@ router.get('/:id', (req, res) => {
 		res.render('merch/show', {merch: merch})
 	})
 	.catch((err) => {
-	    console.log('Error in POST /reviews', err)
-	    res.status(400).render('main/404')
+	    res.status(400).render('404')
 	  })
 })
 
