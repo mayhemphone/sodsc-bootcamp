@@ -1,4 +1,4 @@
-<h1>Manage Inventory</h1>
+<h1 >Manage Inventory</h1>
 
 <!-- show all merch items, add size:textboxforcount-->
 <div class="row">
@@ -6,58 +6,73 @@
 		<table class="striped ">
 			<thead>
 			  <tr>
-	  		  	  <th>Active</th>
-			      <th>Img_1</th>
-			      <th>Name</th>
+			      <th>Images</th>
+			      <th>
+			      	  Name /
+			      	  Collection /
+			      	  Category
+			      </th>
 			      <th>Color</th>
-			      <th>Collection</th>
-			      <th>Category</th>
-			      <th>Sizes/Count</th>
+			      <th>Stock</th>
 			      <th>Price</th>
-			      <th>Pre-Order</th>
-			      <th>Members</th>
-			      <th>Update</th>
+			      		      
+			      <th colspan="2" ><!-- <span style="float:left;vertical-align: center;">Options</span> --><button class="waves-effect waves-light btn  blue-grey darken-3" style="float: right;">Update All</button></th>
 			  </tr>
 			</thead>
 			<tbody>
 				<% merch.forEach((merch)=> { %>
 					<tr>
-						<td>
-							<label>
-				              <input class="filled-in blue-grey" name="active" value ="active" type="checkbox" <%if (merch.active == true){%>checked<%}%>/>
-				              <span></span>
-				            </label>
+						<td style="height: 100px;width:100px;">
+							<input type="hidden" value="<%=merch.id%>" name="id">
+							
+							  <div class="carousel carousel-slider" >
+							    <!-- img_1 is required -->
+							    <a class="carousel-item" href="#one!"><img src="<%= merch.img_1 %>"></a>
+							    
+							    <% if (merch.img_2){ %>
+							    	<a class="carousel-item" href="#two!"><img src="<%= merch.img_2 %>"></a>
+							    <%}%>
+							    <% if (merch.img_3){ %>
+							    	<a class="carousel-item" href="#three!"><img src="<%= merch.img_3 %>"></a>
+							   <%}%>
+							  </div>
 						</td>
-						<td><img style="max-height:100px;"src="<%= merch.img_1 %>"></td>
-						<td><strong><%= merch.item %></strong></td>
+						<td>
+							<strong><%= merch.item %></strong>
+							<br />
+							<em><%= merch.collection %></em>
+							<br />
+							<em><%= merch.category %></em>
+						</td>
 						<td><div style="width:20px;height:20px;border:1px solid black;background-color:<%= merch.color %>;border-radius: 3px;"></div></td>
-						<td><%= merch.collection %></td>
-						<td><%= merch.category %></td>
+						
 						<% console.log(merch.no_size)%>
 						<% if (merch.no_size == false){ %>
 							<td>
 							<!-- draw button to open sizes modal -->
 							 <!-- Modal Trigger -->
-							  <a class="waves-effect waves-light btn modal-trigger blue-grey" href="#<%=merch.id%>">&nbsp;Sizes&nbsp;</a>
+							  <a class="waves-effect waves-light btn modal-trigger blue-grey darken-3" href="#<%=merch.id%>">stock</a>
 
 							  <!-- Modal Structure -->
-							  <div id="<%=merch.id%>" class="modal modal-fixed-footer">
-							    <div class="modal-content">
+							  <div id="<%=merch.id%>" class="modal">
+							    <div class="modal-content col s12" style="padding:60px;">
 						    	<!-- start modal content -->
 							      <h4>Update count per size:</h4><br>
+							      <form method="POST" action="/merch/inventory?_method=PUT">
+							      	<input type="hidden" value="<%=merch.id%>" name="merchId">
 							      <% merch.inventories.forEach((inv)=>{ %>
-								      <form >
 								      <div class="row">
-								        <div class="input-field col s6 offset-s3">
-								          <input id="<%=inv.size%>" value="<%=inv.count%>" name="category" type="number" class="validate">
-								          <label for="category"><%=inv.size%></label>
+								        <div class="input-field ">
+								          <input id="<%=inv.size%>" value="<%=inv.count%>" name="<%=inv.size%>" type="number" class="validate" style="font-size: 6em;height: 6rem;text-align:right;">
+								          <label style="font-size:6rem;" for="category"><%=inv.size%></label>
 								        </div>
 								      </div>
 								   <% }) %>
 								</div>
 								<!-- end modal content -->
 								<div class="modal-footer">
-							      <button href="#<%=merch.id%>" class="modal-close waves-effect waves-green btn-flat">Save</button>
+ 								  <a href="#<%=merch.id%>" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+							      <button href="#<%=merch.id%>" class="saveBtn modal-close waves-effect waves-green btn-flat">Save</button>
 							 	 </form>
 							    </div>
 							  </div>
@@ -68,17 +83,26 @@
 								<td>
 								<!-- draw button to open sizes modal -->
 								 <!-- Modal Trigger -->
-								  <a class="waves-effect waves-light btn modal-trigger blue-grey" href="#modal-<%=merch.id%>">Count</a>
-
+								  <a class="waves-effect waves-light btn modal-trigger blue-grey darken-3" href="#modal-<%=merch.id%>">stock</a>
 								  <!-- Modal Structure -->
-								  <div id="modal-<%=merch.id%>" class="modal modal-fixed-footer">
-								    <div class="modal-content">
+								  <div id="modal-<%=merch.id%>" class="modal">
+								    <div class="modal-content ">
 								      <h4>Update count: </h4>
-								      
-								   		<div class="input-field">
-									    	<input value="0" id="first_name2" type="number" class="validate">
+								      <form method="POST" action="/merch/inventory?_method=PUT">
+							      		<input type="hidden" value="<%=merch.id%>" name="merchId">
+							      <% merch.inventories.forEach((inv)=>{ %>
+								   		<div class="input-field ">
+									    	<input id="<%=inv.size%>" value="<%=inv.count%>" name="<%=inv.size%>" type="number" class="validate " style="font-size: 6em;height: 6rem;">
 									    </div>
-								  </div>
+								  <%})%>
+								  	</div>
+
+								  <!-- end modal content -->
+								    <div class="modal-footer">
+								      <a href="#<%=merch.id%>" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+							      	  <button href="#<%=merch.id%>" class="saveBtn modal-close waves-effect waves-green btn-flat">Save</button>
+							 	 	    </form>
+							    	  </div>
 								</td>
 							
 
@@ -88,19 +112,22 @@
 						</td>
 						<td>
 							<label>
-				              <input class="filled-in" type="checkbox" />
-				              <span></span>
+				              <input class="filled-in blue-grey darken-3" name="active" value ="active" type="checkbox" <%if (merch.active == true){%>checked<%}%>/>
+				              <span>Active</span><br />
 				            </label>
-						</td>
-						<td>
+				            <label>
+				              <input class="filled-in" type="checkbox" />
+				              <span>Pre-order</span><br />
+				            </label>
+						
 							<label>
 				              <input class="filled-in" type="checkbox" />
-				              <span></span>
+				              <span>Members Only</span>
 				            </label>
 						</td>
 						<td>	
-							<button class="left btn-floating waves-effect waves-light blue-grey right" type="submit">
-								 <i class="material-icons right">sync</i>
+							<button class="left btn-floating waves-effect waves-light blue-grey darken-3 right" type="submit">
+								 <i class="material-icons right">edit</i>
     						</button>
         				</td>
 					</tr>
@@ -109,3 +136,18 @@
 		</table>
 	</div>
 </div>
+
+<script>
+
+	// console.log('--------------------------btn:',document.getElementsByClassName('saveBtn'))
+	
+	
+
+	// Array.from(document.getElementsByClassName('saveBtn')).forEach(btn =>{
+	// 	console.log('--------------------------btn:',btn)
+	// 	btn.addEventListener('click', function(e) {
+
+	// 		e.preventDefault()
+	// 	})
+	// })
+</script>

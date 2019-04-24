@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     img_2: DataTypes.STRING,
     img_3: DataTypes.STRING,
     color: DataTypes.STRING,
-    no_size: DataTypes.BOOLEAN
+    no_size: DataTypes.BOOLEAN,
+    desc: DataTypes.TEXT
   }, {});
   merch.associate = function(models) {
     // associations can be defined here

@@ -51,6 +51,9 @@ module.exports = {
       },
       img_3: {
         type: Sequelize.STRING
+      },
+      desc: {
+        type: Sequelize.TEXT
       }
     });
   },

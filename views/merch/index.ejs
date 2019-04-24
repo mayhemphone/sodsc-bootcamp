@@ -1,2 +1,32 @@
 <!-- gallery view of the store -->
 <h1>Merch Store</h1>
+  <div class="row">
+<% merch.forEach((merch)=> { %>
+	<% if (merch.active == true){%>
+	    <div class="col s12 m4 xl3">
+	      <a href="">
+	      <div class="card">
+	        <div class="card-image">
+	          <div class="carousel carousel-slider" >
+							    <!-- img_1 is required -->
+							    <a class="carousel-item" href="#one!"><img src="<%= merch.img_1 %>"></a>
+							    
+							    <% if (merch.img_2){ %>
+							    	<a class="carousel-item" href="#two!"><img src="<%= merch.img_2 %>"></a>
+							    <%}%>
+							    <% if (merch.img_3){ %>
+							    	<a class="carousel-item" href="#three!"><img src="<%= merch.img_3 %>"></a>
+							   <%}%>
+							  </div>
+	          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+	        </div>
+	        <div class="card-content">
+	        	<span class="card-title"><strong><%= merch.item %></strong></span>
+	          <p><%= merch.desc %></p>
+	        </div>
+	      </div>
+	    </a>
+	    </div>
+	 <%}%>
+  <%})%>
+    </div>

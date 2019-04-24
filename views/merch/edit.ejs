@@ -1,33 +1,34 @@
 <div class="row">
   <div class="col s12">
-    <h1>Create Merch Item</h1>
+    <h1>Edit Merch Item</h1>
   </div>
 </div>
  <div class="row">
-    <form class="col s12" action="/merch" method="POST">
+    <form class="col s12" method="POST" action="/merch/<%=merch.id%>?_method=PUT">
+    	<input id="item" hidden="true" name="id" type="text" class="validate" value="<%= merch.id %>">
       <div class="row">
         <div class="input-field col s10">
-          <input id="item" name="item" type="text" class="validate">
+          <input id="item" name="item" type="text" class="validate" value="<%= merch.item %>">
           <label for="item_name">Item Name</label>
         </div>
         <div class="input-field col s2">
-          <input id="price" name="price" type="text" class="validate">
+          <input id="price" name="price" type="text" class="validate" value="<%= merch.price %>">
           <label for="price">Price (in cents)</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input id="category" name="category" type="text" class="validate">
+          <input id="category" name="category" type="text" class="validate" value="<%= merch.category %>">
           <label for="category">Category</label>
         </div>
         <div class="input-field col s6">
-          <input id="collection" name="collection" type="text" class="validate">
+          <input id="collection" name="collection" type="text" class="validate" value="<%= merch.collection %>">
           <label for="collection">Collection</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input id="color" name="color" type="text" class="validate">
+          <input id="color" name="color" type="text" class="validate" value="<%= merch.color %>">
           <label for="color">Color</label>
         </div>
         <div class="input-field offset-s1 col s5">
@@ -53,7 +54,7 @@
       </div>
       <div class="row">
           <div class="input-field col s12">
-            <textarea id="desc" name="desc" class="materialize-textarea" data-length="400"></textarea>
+            <textarea id="desc" name="desc" class="materialize-textarea" data-length="400"><%= merch.desc %></textarea>
             <label for="desc">Description</label>
           </div>
       </div>
@@ -68,16 +69,16 @@
             <!-- image urls box -->
               <div class="card-panel grey lighten-3 col s12">
                 <label>Image 1</label>
-                  <input name="img_1" type="text" placeholder="Image URL" id="img_1"/> <img class="materialboxed" width="100" id="r_img_1" src="">
+                  <input name="img_1" type="text" value="<%= merch.img_1 %>" id="img_1"/> <img class="materialboxed" width="100" id="r_img_1" src="<%= merch.img_1 %>">
                 <label>Image 2</label>
-                  <input name="img_2" type="text" placeholder="Image URL" id="img_2"/> <img class="materialboxed" width="100" id="r_img_2" src="">
+                  <input name="img_2" type="text" placeholder="Image URL" id="img_2"/> <img class="materialboxed" width="100" id="r_img_2" src="<%= merch.img_2 %>">
                 <label>Image 3</label>
-                  <input name="img_3" type="text" placeholder="Image URL" id="img_3"/> <img class="materialboxed" width="100" id="r_img_3" src="">
+                  <input name="img_3" type="text" placeholder="Image URL" id="img_3"/> <img class="materialboxed" width="100" id="r_img_3" src="<%= merch.img_3 %>">
               </div>
           </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="pre_order" name="pre_order" type="text" placeholder="Enter release date: MM/DD/YY">
+            <input id="pre_order" name="pre_order" type="text" value="<%= merch.pre_order %>">
             <label for="pre_order">Pre-Order?</label>
           </div>
         </div>
@@ -101,7 +102,7 @@
             </label>
           </div>
           <div class="col s3">
-            <button class="btn waves-effect waves-light grey darken-3 right" type="submit">Create
+            <button class="btn waves-effect waves-light grey darken-3 right" type="submit">Update
               <i class="material-icons right">add_circle_outline</i>
             </button>
           </div>

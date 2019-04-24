@@ -16,7 +16,7 @@ let loggedIn = require('../middleware/loggedIn')
 
 
 
-// POST /articles - create a new post
+// POST /merch - create a new post
 router.post('/', function(req, res) {
   
   // create merch item
@@ -33,7 +33,8 @@ router.post('/', function(req, res) {
     price: req.body.price,
     active: req.body.active,
     color: req.body.color,
-    no_size: req.body.no_size
+    no_size: req.body.no_size,
+    desc: req.body.desc
   })
 	.then(merch=>{
 		
@@ -110,10 +111,124 @@ router.get('/inventory', (req, res) => {
 		 res.render('merch/inventory', { merch: merch })
 	})
 	.catch((err) => {
-	    console.log('Error in POST /merch', err)
-	    res.render('main/404')
+	    console.log('Error in GET /merch/inventory', err)
+	    res.render('/404')
 	  })
 })
+
+router.put('/:id', (req,res)=>{
+  console.log('Reached PUT route')
+  console.log('---------req.body.item:',req.body.item)
+  db.merch.update(
+  {
+  	id: req.body.id,
+    item: req.body.item,
+    category: req.body.category,
+    sex: req.body.sex,
+    collection: req.body.collection,
+    pre_order: req.body.pre_order,
+    members_only: req.body.members_only,
+    img_1: req.body.img_1,
+    img_2: req.body.img_2,
+    img_3: req.body.img_3,
+    price: req.body.price,
+    active: req.body.active,
+    color: req.body.color,
+    no_size: req.body.no_size,
+    desc: req.body.desc
+  },
+    { where: {id: req.params.id} }
+  )
+  .then((updatedRows)=>{
+    console.log('success', updatedRows)
+    res.redirect('/merch/' + req.params.id)
+  })
+  .catch((err) => {
+      console.log('Error in PUT /:id', err)
+      res.render('404')
+    })
+})
+
+router.get('/:id', (req,res)=>{
+  console.log('Reached get route')
+
+	db.merch.findOne({
+	    where: { id: req.params.id },
+	    include: [db.inventory]
+	  })
+    .then(function(merch) {
+  		console.log('found:', merch)
+	    if (!merch) throw Error()
+	    res.render('merch/edit', { merch: merch })
+  })
+
+  .catch((err) => {
+        console.log('Error in POST /reviews', err)
+        res.render('404')
+    })
+})
+
+router.put('/inventory', (req,res)=>{
+  console.log('Reached PUT route')
+
+  // TODO
+  // COME BACK AND MAKE THIS A LOOP YOU LAZY FUCK.
+  	db.inventory.update({ count : req.body['none']  },{ 
+		where : { 
+			merchId: req.body.merchId, 
+			size: 'none' 
+		}
+	})
+	db.inventory.update({ count : req.body['x-small']  },{ 
+		where : { 
+			merchId: req.body.merchId, 
+			size: 'x-small' 
+		}
+	})
+	db.inventory.update({ count : req.body['small']  },{ 
+		where : { 
+			merchId: req.body.merchId, 
+			size: 'small' 
+		}
+	})
+	db.inventory.update({ count : req.body['medium']  },{ 
+		where : { 
+			merchId: req.body.merchId, 
+			size: 'medium' 
+		}
+	})
+	db.inventory.update({ count : req.body['large']  },{ 
+		where : { 
+			merchId: req.body.merchId, 
+			size: 'large' 
+		}
+	})
+	db.inventory.update({ count : req.body['x-large']  },{ 
+		where : { 
+			merchId: req.body.merchId, 
+			size: 'x-large' 
+		}
+	})
+	db.inventory.update({ count : req.body['xx-large']  },{ 
+		where : { 
+			merchId: req.body.merchId, 
+			size: 'xx-large' 
+		}
+	})
+
+	// db.inventory.update({ count : '666' },{ where : { merchId : 4 }}) 
+
+
+  .then((updatedRows)=>{
+    console.log('success', updatedRows)
+    // res.redirect('/merch/inventory')
+  })
+  .catch((err) => {
+      console.log('Error in POST /reviews', err)
+      res.render('404')
+    })
+})
+
 
 router.get('/:id', (req, res) => {
 	db.merch.findOne({
@@ -128,6 +243,8 @@ router.get('/:id', (req, res) => {
 	    res.status(400).render('main/404')
 	  })
 })
+
+
 
 //cloudinary widget
  function cloudwidget (req, res) {

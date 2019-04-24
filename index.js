@@ -6,7 +6,7 @@ let express = require('express')
 let flash = require('connect-flash')
 let layouts = require('express-ejs-layouts')
 let session = require('express-session')
-
+var methodOverride = require('method-override')
 
 
 // Include passport configuration
@@ -30,6 +30,7 @@ app.use(session({
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(methodOverride('_method'))
 
 // Custom middleware - write data to locals on EVERY page
 app.use((req, res, next) => {
