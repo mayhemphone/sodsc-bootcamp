@@ -9,6 +9,7 @@ let session = require('express-session')
 var methodOverride = require('method-override')
 
 
+
 // Include passport configuration
 let passport = require('./config/passportConfig')
 
