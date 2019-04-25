@@ -99,13 +99,13 @@ router.get('/', (req, res) => {
 })
 
 // GET /merch/new - display form for creating new articles
-router.get('/new',  (req, res) =>{
+router.get('/new', adminLoggedIn, (req, res) =>{
 
 	res.render('merch/new')
 })
 
 // GET /merch/inventory
-router.get('/inventory', (req, res) => {
+router.get('/inventory', adminLoggedIn, (req, res) => {
 	db.merch.findAll({ include:[ db.inventory]} )
 	.then((merch)=>{
 		 res.render('merch/inventory', { merch: merch })
@@ -117,7 +117,7 @@ router.get('/inventory', (req, res) => {
 })
 
 //INVENTORY EDIT PUT
-router.put('/inventory', (req,res)=>{
+router.put('/inventory',  adminLoggedIn, (req,res)=>{
 
   // TODO
   // COME BACK AND MAKE THIS A LOOP YOU LAZY FUCK.
@@ -176,7 +176,7 @@ router.put('/inventory', (req,res)=>{
 
 // SINGLE MERCH EDIT PUT
 
-router.put('/:id', (req,res)=>{
+router.put('/edit/:id',  adminLoggedIn, (req,res)=>{
   
   // check values for undefined, and store proper true / false values - 
   //need to change these from doing strings to true booleans
@@ -227,6 +227,7 @@ router.put('/:id', (req,res)=>{
 			console.log('')
 				console.log('************DELETE OLD NONE RECORD, MAKE SIZE RECORDS************')
 				console.log('')
+				//delete this theId?
 				let theId = req.body.id
 				db.inventory.destroy({
 				    where: {
@@ -283,7 +284,7 @@ router.put('/:id', (req,res)=>{
     })
 })
 
-router.get('/:id', (req,res)=>{
+router.get('/edit/:id', (req,res)=>{
   // console.log('Reached get route')
 
 	db.merch.findOne({

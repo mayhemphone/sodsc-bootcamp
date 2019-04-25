@@ -1,3 +1,24 @@
 <!-- display a single piece of content -->
-<h1><%= content.title %></h1>
-<p><%- htmlContent %></p>
+<div class="row">
+	<div class="col s12" >
+		<h1><%= content.title %></h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col s12">
+		<%- htmlContent %>
+	</div>
+</div>
+<div class="row">
+<div class="col s12">
+
+<% if(!user) { %>
+<!-- Not logged in, do nothing -->
+<% } else { %>
+    <% if(user.admin) { %>
+    <!-- you're logged in, show the edit button -->
+    	<a href="/content/edit/<%=content.id%>" class="right waves-effect waves-light btn grey darken-3"><i class="material-icons right">edit</i>Edit</a>
+	<% } %> 
+<% } %>
+    </div>
+</div>

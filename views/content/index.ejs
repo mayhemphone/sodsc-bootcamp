@@ -5,7 +5,15 @@
 			<div class="row">
 				<div class="col sm-12">
 					<h1><%= c.title %></h1>
-					<small><%=c.description%></small>
+					<small><%=c.description%></small><br>
+					<% if(!user) { %>
+						<!-- Not logged in, do nothing -->
+						<% } else { %>
+						    <% if(user.admin) { %>
+						    <!-- you're logged in, show the edit button -->
+						    	<a href="/content/edit/<%=c.id%>" class="left waves-effect waves-light btn grey darken-3"><i class="material-icons right">edit</i>Edit</a>
+							<% } %> 
+						<% } %>
 				</div>
 			</div>
 		<%})%>

@@ -6,7 +6,7 @@ let express = require('express')
 let flash = require('connect-flash')
 let layouts = require('express-ejs-layouts')
 let session = require('express-session')
-var methodOverride = require('method-override')
+let methodOverride = require('method-override')
 
 
 

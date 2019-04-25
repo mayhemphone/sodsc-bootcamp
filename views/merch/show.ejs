@@ -1,1 +1,27 @@
 <!-- item details of a product -->
+<div class="row">
+	<div class="col s12">
+		<h1>product show page</h1>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col s4">
+		<img class="materialboxed" width="100%" src="<%=merch.img_1%>">
+	</div>
+	<div class="col s8">
+		<div class="row">
+			<div class="col s12">
+				<h4><%=merch.item.toUpperCase()%></h4>
+				<h6>$<%= merch.price/100 %></h6>
+				<p><small>type: </small><%= merch.category.toUpperCase() %> <br />
+				<small>collection: </small><%= merch.collection.toUpperCase() %> <br />
+				<small>sizes: </small>
+
+			</p>
+			</div>
+		</div>
+		</div>
+	</div>
+	
+</div>

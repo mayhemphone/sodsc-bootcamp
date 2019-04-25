@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 	db.content.findAll()
 	.then((content)=>{
 		res.render('content/index', { 
-		 	content: content
+		 	content: content 
 		})
 	})
 	.catch((err) => {
@@ -29,7 +29,7 @@ router.get('/', (req, res) => {
 })
 
 // GET /merch/new - display form for creating new articles
-router.get('/new', (req, res) =>{
+router.get('/new', adminLoggedIn, (req, res) =>{
 
 	res.render('content/new')
 })
@@ -37,7 +37,7 @@ router.get('/new', (req, res) =>{
 
 
 // POST /content - create a new post
-router.post('/', function(req, res) {
+router.post('/', adminLoggedIn, function(req, res) {
   
 
   // create merch item
@@ -62,11 +62,12 @@ router.post('/', function(req, res) {
 
 // edit single content item
 
-router.put('/edit/:id', (req,res)=>{
+router.put('/edit/:id', adminLoggedIn, (req,res)=>{
   //now do the merch database update
   db.content.update(
   {
   	id: req.body.id,
+  	title: req.body.title,
     description: req.body.description,
     meat: req.body.meat,
     featured: req.body.featured,
@@ -84,7 +85,7 @@ router.put('/edit/:id', (req,res)=>{
 })
 
 // needs to be below others so it doesn't catch them too
-router.get('/edit/:id', (req, res) => {
+router.get('/edit/:id', adminLoggedIn, (req, res) => {
 	db.content.findOne({
 		where: {id: req.params.id }
 	})
