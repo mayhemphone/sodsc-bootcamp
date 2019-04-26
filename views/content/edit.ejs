@@ -16,11 +16,11 @@
         </div>
       </div>
       <div class="row">
-        <div class="input-field col s10">
+        <div class="input-field col l10 s12">
           <input id="description" name="description" type="text" class="validate"value="<%=content.description%>">
           <label for="description">Description</label>
         </div>
-        <div class="input-field col s2">
+        <div class="input-field col l2 s12">
         	<label >
               <input name="featured" type="checkbox" <%if (content.featured == true){%>checked<%}%> />
               <span >Featured</span>
@@ -29,10 +29,11 @@
       </div>
       <div class="row">
         <div class="input-field col s12">
-  			<input name="meat" type="hidden">
-  			<div id="editor" style="min-height: 30em;">
-			  <%- htmlContent %>
-			</div>
+    			<input name="meat" type="hidden">
+    			<div name="editor" id="editor" style="min-height: 30em;">
+  			    <%- htmlContent %>
+			    </div>
+
         </div>
       </div>
         <div class="row">

@@ -1,27 +1,52 @@
 <!-- item details of a product -->
 <div class="row">
 	<div class="col s12">
-		<h1>product show page</h1>
+		<h1></h1>
 	</div>
 </div>
 
 <div class="row">
-	<div class="col s4">
-		<img class="materialboxed" width="100%" src="<%=merch.img_1%>">
+	<!-- left (image) -->
+	<div class="col s12 l6">
+		<img class="materialboxed" width="100%" src="<%=merch.img_1%>"><br>
+		<img class="materialboxed1" width="100em" style="margin-right:1em; display: inline-block;" src="<%=merch.img_1%>">
+		<img class="materialboxed1" width="100em" style="margin-right:1em; display: inline-block;" src="<%=merch.img_1%>">
 	</div>
-	<div class="col s8">
-		<div class="row">
-			<div class="col s12">
-				<h4><%=merch.item.toUpperCase()%></h4>
-				<h6>$<%= merch.price/100 %></h6>
-				<p><small>type: </small><%= merch.category.toUpperCase() %> <br />
-				<small>collection: </small><%= merch.collection.toUpperCase() %> <br />
-				<small>sizes: </small>
+	<div class="col s12 l6">
+	<!-- right (details) -->
+		<h4><%=merch.item.toUpperCase()%></h4>
+		<h5>$<%= merch.price/100 %></h5><br />
+	</div>
+	<div class="col s12 l6">
 
-			</p>
+		<p><small>type: </small><%= merch.category.toUpperCase() %> <br />
+		<small>collection: </small><%= merch.collection.toUpperCase() %> <br /></p>
+		
+		
+				<!-- if statement to see if it has sizes -->
+				<small>sizes: </small><br>
+				<!-- temp size buttons.  will loop through avail styles -->
+				<div style="line-height: 3em; width:3em;border: 1px solid black;background-color: whtie;border-radius: 1px;display: inline-block;text-align: center;">xs</div>
+				<div style="line-height: 3em; width:3em;border: 1px solid black;background-color: whtie;border-radius: 1px;display: inline-block;text-align: center;">s</div>
+				<div style="line-height: 3em; width:3em;border: 1px solid black;background-color: whtie;border-radius: 1px;display: inline-block;text-align: center;">m</div>
+				<div style="line-height: 3em; width:3em;border: 1px solid black;background-color: whtie;border-radius: 1px;display: inline-block;text-align: center;">l</div>
+				<div style="line-height: 3em; width:3em;border: 1px solid black;background-color: whtie;border-radius: 1px;display: inline-block;text-align: center;">xl</div>
+				<div style="line-height: 3em; width:3em;border: 1px solid black;background-color: whtie;border-radius: 1px;display: inline-block;text-align: center;">xxl</div>
+				<!-- end sizes if statement -->
+			
+		<div class="row valign-wrapper" >
+		    <div class="input-field col s1 ">
+		      <input value="1" id="quantity" type="text" class="validate">
+		      <label class="active" for="quantity">Quantity</label>
+		    </div>
+		    <div class=" col s11 ">
+		    	<a class="waves-effect waves-light btn grey darken-3">ADD TO CART</a>
+		    </div>
+		</div>
+		<div class="row">
+			<div class="col s12 l12">
+				<%= merch.desc %>
 			</div>
 		</div>
-		</div>
 	</div>
-	
 </div>
