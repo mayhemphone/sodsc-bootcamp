@@ -22,7 +22,10 @@
 		<p><small>type: </small><%= merch.category.toUpperCase() %> <br />
 		<small>collection: </small><%= merch.collection.toUpperCase() %> <br /></p>
 		
-		
+		<input hidden="true" name="id" value="<%=merch.id%>">
+		<!-- TEMP SIZE VALUE -->
+		<input hidden="true" name="size" value="large">
+
 				<!-- if statement to see if it has sizes -->
 				<small>sizes: </small><br>
 				<!-- temp size buttons.  will loop through avail styles -->
