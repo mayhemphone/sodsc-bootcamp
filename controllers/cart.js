@@ -19,20 +19,23 @@ let loggedIn = require('../middleware/loggedIn')
 // GET /cart
 router.get('/', (req, res) => {
   db.user.findOne({
-    where: { id: req.params.id },
+    where: { id: 1 },
     include: [{
       model: db.cart_items,
       include: [db.merch]
     }]
   })
-  .then(merch => {
+  .then((user) => {
     res.render('cart/index', { user })
+    // res.send('test')
   })
   .catch(err => {
     console.log(err)
     res.render('404')
   })
 })
+
+
 
 // POST /cart - create a new merch item
 router.post('/', function(req, res) {
