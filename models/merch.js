@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
 
     models.merch.hasMany(models.inventory)
-    
+    models.merch.hasMany(models.cart_items)
 
   };
   return merch;

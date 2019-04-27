@@ -45,6 +45,7 @@ app.use('/auth', require('./controllers/auth'))
 app.use('/profile', require('./controllers/profile'))
 app.use('/content', require('./controllers/content'))
 app.use('/merch', require('./controllers/merch'))
+app.use('/cart', require('./controllers/cart'))
 
 
 // Make a home route: GET /

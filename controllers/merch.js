@@ -16,7 +16,7 @@ let loggedIn = require('../middleware/loggedIn')
 
 
 
-// POST /merch - create a new post
+// POST /merch - create a new merch item
 router.post('/', function(req, res) {
   
   // create merch item
@@ -69,7 +69,7 @@ router.post('/', function(req, res) {
 
 		    }, () => {
 		      // console.log('EVERYTHING is done. Now redirect or something')
-		      res.redirect('/')
+		      res.redirect('merch/inventory')
 		    })	  
 			} //close if / else statement
 		})
@@ -130,37 +130,37 @@ router.put('/inventory',  adminLoggedIn, (req,res)=>{
 	db.inventory.update({ count : req.body['x-small']  },{ 
 		where : { 
 			merchId: req.body.merchId, 
-			size: 'x-small' 
+			size: 'xs' 
 		}
 	})
 	db.inventory.update({ count : req.body['small']  },{ 
 		where : { 
 			merchId: req.body.merchId, 
-			size: 'small' 
+			size: 's' 
 		}
 	})
 	db.inventory.update({ count : req.body['medium']  },{ 
 		where : { 
 			merchId: req.body.merchId, 
-			size: 'medium' 
+			size: 'm' 
 		}
 	})
 	db.inventory.update({ count : req.body['large']  },{ 
 		where : { 
 			merchId: req.body.merchId, 
-			size: 'large' 
+			size: 'l' 
 		}
 	})
 	db.inventory.update({ count : req.body['x-large']  },{ 
 		where : { 
 			merchId: req.body.merchId, 
-			size: 'x-large' 
+			size: 'xl' 
 		}
 	})
 	db.inventory.update({ count : req.body['xx-large']  },{ 
 		where : { 
 			merchId: req.body.merchId, 
-			size: 'xx-large' 
+			size: 'xxl' 
 		}
 	})
 
@@ -306,7 +306,8 @@ router.get('/edit/:id', (req,res)=>{
 
 router.get('/:id', (req, res) => {
 	db.merch.findOne({
-		where: {id: req.params.id }
+		where: {id: req.params.id },
+		include: [db.inventory]
 	})
 	.then((merch)=>{
 		if (!merch) throw Error()

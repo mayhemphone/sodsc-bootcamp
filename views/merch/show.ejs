@@ -21,29 +21,42 @@
 
 		<p><small>type: </small><%= merch.category.toUpperCase() %> <br />
 		<small>collection: </small><%= merch.collection.toUpperCase() %> <br /></p>
-		
-		<input hidden="true" name="id" value="<%=merch.id%>">
-		<!-- TEMP SIZE VALUE -->
-		<input hidden="true" name="size" value="large">
+		<input hidden="true" name="hiddenUserId" id="hiddenUserId"value="<%if (user){%><%= user.id %><%}%>">
+		<input hidden="true" name="hiddenSleeves" id="hiddenSleeves"value="true">
 
+		<input hidden="true" name="hiddenMerchId" id="hiddenMerchId"value="<%=merch.id%>">
+		<!-- TEMP SIZE VALUE -->
+		<input hidden="true" name="hiddenSize" id="hiddenSize" value="large">
+			
 				<!-- if statement to see if it has sizes -->
 				<small>sizes: </small><br>
-				<!-- temp size buttons.  will loop through avail styles -->
-				<div style="line-height: 3em; width:3em;border: 1px solid black;background-color: whtie;border-radius: 1px;display: inline-block;text-align: center;">xs</div>
-				<div style="line-height: 3em; width:3em;border: 1px solid black;background-color: whtie;border-radius: 1px;display: inline-block;text-align: center;">s</div>
-				<div style="line-height: 3em; width:3em;border: 1px solid black;background-color: whtie;border-radius: 1px;display: inline-block;text-align: center;">m</div>
-				<div style="line-height: 3em; width:3em;border: 1px solid black;background-color: whtie;border-radius: 1px;display: inline-block;text-align: center;">l</div>
-				<div style="line-height: 3em; width:3em;border: 1px solid black;background-color: whtie;border-radius: 1px;display: inline-block;text-align: center;">xl</div>
-				<div style="line-height: 3em; width:3em;border: 1px solid black;background-color: whtie;border-radius: 1px;display: inline-block;text-align: center;">xxl</div>
-				<!-- end sizes if statement -->
+				
+				<%console.log('')%>
+				<%console.log('')%>
+				<%console.log(merch.inventories)%>
+
+				<% merch.inventories.forEach((sizes)=>{%>
+				
+				<div style="line-height: 3em; width:3em;border: 1px solid black;background-color: white;border-radius: 1px;display: inline-block;text-align: center;color:black;" id="<%=sizes.size%>" class="sizeButton" onclick="sizeChange(<%=sizes.size%>)"><%=sizes.size%></div>
+				<%})%>
 			
+		<div class="row">
+			<div class="col l12">
+				<p>
+			      <label>
+			        <input type="checkbox" class="filled-in" />
+			        <span>Remove Sleeves</span>
+			      </label>
+			    </p>
+			</div>
+		</div>
 		<div class="row valign-wrapper" >
-		    <div class="input-field col s1 ">
+		    <div class="input-field col l2 ">
 		      <input value="1" id="quantity" type="text" class="validate">
 		      <label class="active" for="quantity">Quantity</label>
 		    </div>
-		    <div class=" col s11 ">
-		    	<a class="waves-effect waves-light btn grey darken-3">ADD TO CART</a>
+		    <div class=" col l10 ">
+		    	<a id="add-item" class="waves-effect waves-light btn grey darken-3 modal-trigger" href="#modal_cart">ADD TO CART</a>
 		    </div>
 		</div>
 		<div class="row">
@@ -53,3 +66,105 @@
 		</div>
 	</div>
 </div>
+
+  <!-- Cart Modal Structure -->
+  <div id="modal_cart" class="modal bottom-sheet ">
+    <div class="modal-content ">
+	    <div class="row">
+	      <div class="col l8 s12">
+	      	<h4>Your Cart</h4>
+		      <table class="striped">
+		      	<tr>
+					<td>
+						<input type="hidden" value="<%=merch.id%>" name="id">
+						<a href="http://localhost:3000/merch/<%=merch.id%>">
+							<img style="height: 50px;width:50px;" src="<%= merch.img_1 %>">
+						</a>
+						  
+					</td>
+					<td>
+						<h6 style="font-weight:600;margin: 0;color:black;"><%= merch.item %></h6>
+					</td>
+					<td><div style="width:20px;height:20px;border:1px solid black;background-color:<%= merch.color %>;border-radius: 3px;">
+						</div>
+					</td>
+					
+					<td>
+						$<%= merch.price/100 %>
+					</td>
+					<td >
+						<div class="row valign-wrapper" >
+						    <div class="input-field ">
+						      <input value="1" style="width:3em;margin-right: 1em;" id="quantity" type="text" class="validate">
+						      <label class="active" for="quantity">Quantity</label>
+						    </div>
+						    <div class="">
+						    	<a class="waves-effect waves-light btn grey darken-3 modal-trigger" href="#modal_cart">Update</a>
+						    </div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		  </div>
+		  <div class="col l4 s12">
+		  	<h5>Total</h5>
+		  </div>
+		</div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Keep shopping</a>
+    </div>
+  </div>
+<script type="text/javascript">
+	
+let currentSize = ''
+
+if (document.getElementById('add-item')) {
+		document.getElementById('add-item').addEventListener('click', function(e) {
+			e.preventDefault()
+			
+			if (currentSize=='') {
+				alert('pick a size')
+			} else {
+
+				$.ajax({
+					url: 'http://localhost:3000/cart/',
+					method: 'POST',
+					data: {
+						userId: document.getElementById('hiddenUserId').getAttribute('value'),
+					    merchId: document.getElementById('hiddenMerchId').getAttribute('value'),
+					    size: document.getElementById('hiddenSize').getAttribute('value'),
+					    sleeves: document.getElementById('hiddenSleeves').getAttribute('value')
+					}
+				})
+				.success(res => {
+					console.log('success', res)
+					
+				})
+				.fail(err => {
+					console.log('fail', err)
+					// if response status is 401 then 
+					// location.href = '/auth/login'
+				})
+
+			}
+
+
+		})
+	}
+
+function sizeChange(e){
+
+	let z = document.getElementsByClassName('sizeButton')
+	for (i=0;i<z.length;i++){
+		z[i].style.backgroundColor="white"
+		z[i].style.color="black"
+	}
+	e.style.color="white"
+	e.style.backgroundColor="#424242"
+	currentSize = e.id
+	console.log(currentSize)
+
+}
+
+</script>
