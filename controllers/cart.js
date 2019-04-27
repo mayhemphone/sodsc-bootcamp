@@ -15,6 +15,25 @@ let adminLoggedIn = require('../middleware/adminLoggedIn')
 let loggedIn = require('../middleware/loggedIn')
 
 
+
+// GET /cart
+router.get('/', (req, res) => {
+  db.user.findOne({
+    where: { id: req.params.id },
+    include: [{
+      model: db.cart_items,
+      include: [db.merch]
+    }]
+  })
+  .then(merch => {
+    res.render('cart/index', { user })
+  })
+  .catch(err => {
+    console.log(err)
+    res.render('404')
+  })
+})
+
 // POST /cart - create a new merch item
 router.post('/', function(req, res) {
   console.log(req.body)
