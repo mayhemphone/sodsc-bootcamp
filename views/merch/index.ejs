@@ -7,18 +7,12 @@
 	      <a href="">
 	      <div class="card">
 	        <div class="card-image">
-	          <div class="carousel carousel-slider" >
-							    <!-- img_1 is required -->
-							    <a class="carousel-item" href="http://localhost:3000/merch/<%=merch.id%>"><img src="<%= merch.img_1 %>"></a>
-							    
-							    <% if (merch.img_2){ %>
-							    	<a class="carousel-item" href="http://localhost:3000/merch/<%=merch.id%>"><img src="<%= merch.img_2 %>"></a>
-							    <%}%>
-							    <% if (merch.img_3){ %>
-							    	<a class="carousel-item" href="http://localhost:3000/merch/<%=merch.id%>"><img src="<%= merch.img_3 %>"></a>
-							   <%}%>
-							  </div>
-	          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+	          
+			    <!-- img_1 is required -->
+			    <a class="carousel-item" href="http://localhost:3000/merch/<%=merch.id%>"><img src="<%= merch.img_1 %>"></a>
+			    
+			    
+			  
 	        </div>
 	        <div class="card-content">
 	        	<span class="card-title"><strong><%= merch.item %></strong></span>

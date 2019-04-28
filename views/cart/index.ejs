@@ -1,9 +1,16 @@
-<div class="row">
+
+
+<script src="https://checkout.stripe.com/checkout.js" defer></script>
+<script>
+   var stripePublicKey ='<%= stripePublicKey %>'
+</script>
+<script src="js/checkout.js" defer></script>
+        <div class="row">
 	      <div class="col l9 s12">
 	      	<h4>Your Cart</h4>
 		      <table class="striped">
 			<% user.cart_items.forEach((ci)=>{%>
-		      	<tr>
+		      	<tr class="cart-row" data-item-id="<%=ci.merch.id%>">
 					<td style="vertical-align: top;
   text-align: left;">
 						<input type="hidden" value="<%=ci.merch.id%>" name="id">
@@ -24,7 +31,7 @@
   text-align: left;">
 						<div class="row valign-wrapper" >
 						    <div class="input-field "style="width:4em;padding-left:1em;">
-						      <input value="1" style="width:2em;margin-right: 1em;" id="quantity" type="number" class="validate">
+						      <input value="1" style="width:2em;margin-right: 1em;" id="quantity" type="number" class="validate cart-quantity-input">
 						      <label class="active" for="quantity">Quantity</label>
 						  		<small>Update</small><br>
 						  		<small>Remove</small>
@@ -44,8 +51,9 @@
 		  		<%total = total + p.merch.price%>
 
 			<%})%>
-			<p>Subtotal: <span class="right">$<%=total/100%></span></p>
+			<p>Subtotal: <span class="right" id="finalTotal">$<%=total/100%></span></p>
 			<p>Shipping: <span class="right">FREE</span></p>
+			<button class="btn btn-primary btn-purchase" type="button" id="purchase" >PURCHASE</button>
 		  </div>
 		</div>
     </div>

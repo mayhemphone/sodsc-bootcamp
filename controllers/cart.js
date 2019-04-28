@@ -14,6 +14,13 @@ let multer = require('multer')
 let adminLoggedIn = require('../middleware/adminLoggedIn')
 let loggedIn = require('../middleware/loggedIn')
 
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
+
+
+
+
+
 
 
 // GET /cart
@@ -26,10 +33,10 @@ router.get('/', loggedIn, (req, res) => {
     }]
   })
   .then((user) => {
-    res.render('cart/index', { user })
-    console.log('')
-    console.log('req.user')
-    console.log(req.user)
+    res.render('cart/index', { user, stripePublicKey })
+    // console.log('')
+    // console.log('req.user')
+    // console.log(req.user)
     // res.send('test')
   })
   .catch(err => {
