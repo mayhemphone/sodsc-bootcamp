@@ -3,7 +3,7 @@ require('dotenv').config()
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
-const fs = require('fs')
+
 
 // Require necessary modules
 let express = require('express')
@@ -64,35 +64,23 @@ app.get('*', (req, res) => {
 
 
 app.post('/purchase', (req, res)=>{
-  // fs.readFile('items.json', (error, data)=>{
-  //   if (error) {
-  //     res.status(500).end()
-  //   } else {
-  //     const itemsJson = JSON.parse(data)
-  //     const  itemsArray = itemsJson.music.concat(itemsJson.merch)
-  //     let total = 0
-  //     req.body.items.forEach((item)=>{
-  //       const itemsJson = itemsArray.find((i)=>{
-  //         return i.id ==item.id
-  //       })
-  //       total = total + itemsJson.price * item.quantity
-  //     })
-  		console.log('')
-  		console.log('')
-  		console.log('req.body', req.body)
-      stripe.charges.create({
-        amount: 200,
-        source: req.body.stripeTokenId,
-        currency: 'usd'
-      }).then(()=>{
-        console.log('Charge Successful')
-        res.json({message: 'Successfully purchased items'})
-      }).catch((err) => {
-          console.log('Error in POST /reviews', err)
-          res.status(500).end()
-        })
-  //   }
-  // })
+  const itemsJson = JSON.parse(req.body.main)
+
+  stripe.charges.create({
+    amount: itemsJson.total,
+    source: itemsJson.stripeTokenId,
+    currency: 'usd',
+    description: 'SODSC Order',
+    statement_descriptor: 'SODSC MERCH',
+    metadata: {order_id: 6735}
+  }).then(()=>{
+    console.log('Charge Successful')
+    res.json({message: 'Successfully purchased items'})
+  }).catch((err) => {
+      console.log('Error in POST /reviews', err)
+      res.status(500).end()
+    })
+
 })
 
 

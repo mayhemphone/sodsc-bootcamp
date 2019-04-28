@@ -4,6 +4,7 @@
 var stripeHandler = StripeCheckout.configure({
     key: stripePublicKey,
     locale: 'auto',
+    // add other things here I think: https://stripe.com/docs/checkout
     token: (token)=>{
         var items = []
         var cartItemsContainer = document.getElementsByClassName('striped')[0]
@@ -14,19 +15,28 @@ var stripeHandler = StripeCheckout.configure({
             var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
             var quantity = quantityElement.value
             var id = cartRow.dataset.itemId
-        
+        	var priceElement = document.getElementById('finalTotal')
+        	total = parseFloat(priceElement.innerText.replace('$', ''))*100
             items.push({
                 id: id,
                 quantity: quantity
             })
          
         }
+        let toSend = JSON.stringify({
+                stripeTokenId: token.id,
+                items: items,
+                total: total
+            })
+
         fetch('/purchase', {
             method: 'POST',
-            body: JSON.stringify({
-                stripeTokenId: token.id,
-                items: items
-            })
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `main=${toSend}`
+
+          
         }).then((res)=>{
         	console.log('')
         	console.log('')
@@ -39,7 +49,10 @@ var stripeHandler = StripeCheckout.configure({
             while(cartItems.hasChildNodes()){
                 cartItems.removeChild(cartItems.firstChild)
             }
-            updateCartTotal()
+            document.getElementById('order-summary').innerText =''
+            cartItems.innerText = "Your order is complete! Thank you!"
+            //function to clear out database
+            //
         }).catch((err) => {
             console.log('Error in POST /checkout', err)
             console.log('')
