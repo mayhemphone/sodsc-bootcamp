@@ -16,8 +16,8 @@
 						<h6 style="font-weight:600;margin: 0;color:black;padding-bottom:.5em;"><%= ci.merch.item %></h6>
 						<div style="width:20px;height:20px;border:1px solid black;background-color:<%= ci.merch.color %>;border-radius: 3px;display: inline-block;margin-right: .5em;">
 						</div>
-						<small>size: <%=ci.size%></small>
-						<br>$<%= ci.merch.price/100 %>
+						$<%= ci.merch.price/100 %>
+						<br><small>size: <%=ci.size%></small>
 					</td>
 					
 					<td style="vertical-align: top;
@@ -26,7 +26,8 @@
 						    <div class="input-field "style="width:4em;padding-left:1em;">
 						      <input value="1" style="width:2em;margin-right: 1em;" id="quantity" type="number" class="validate">
 						      <label class="active" for="quantity">Quantity</label>
-						  		<small>update</small>
+						  		<small>Update</small><br>
+						  		<small>Remove</small>
 						    </div>
 						    
 						</div>
@@ -36,7 +37,15 @@
 		</table>
 	</div>
     <div class="col l3 s12">
-		  	<h5>Total</h5>
+		  	<h5>Ordar Summary</h5>
+		  	
+		  	<%let total = 0%>
+		  	<% user.cart_items.forEach((p)=>{ %>
+		  		<%total = total + p.merch.price%>
+
+			<%})%>
+			<p>Subtotal: <span class="right">$<%=total/100%></span></p>
+			<p>Shipping: <span class="right">FREE</span></p>
 		  </div>
 		</div>
     </div>

@@ -17,9 +17,9 @@ let loggedIn = require('../middleware/loggedIn')
 
 
 // GET /cart
-router.get('/', (req, res) => {
+router.get('/', loggedIn, (req, res) => {
   db.user.findOne({
-    where: { id: 1 },
+    where: { id: req.user.id },
     include: [{
       model: db.cart_items,
       include: [db.merch]
@@ -27,6 +27,9 @@ router.get('/', (req, res) => {
   })
   .then((user) => {
     res.render('cart/index', { user })
+    console.log('')
+    console.log('req.user')
+    console.log(req.user)
     // res.send('test')
   })
   .catch(err => {
@@ -45,7 +48,8 @@ router.post('/', function(req, res) {
     userId: req.body.userId,
     merchId: req.body.merchId,
     size: req.body.size,
-    sleeves: req.body.sleeves
+    sleeves: req.body.sleeves,
+    quantity: req.body.quantity
   })
 
   .then(function(merch) {
