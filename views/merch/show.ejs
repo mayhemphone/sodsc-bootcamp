@@ -1,38 +1,32 @@
 <!-- item details of a product -->
-
 <a href="/merch"><-- Back</a>
 <div class="row">
 	<div class="col s12">
 		<h1></h1>
 	</div>
 </div>
-
 <div class="row">
 	<!-- left (image) -->
 	<div class="col s12 l6">
-		<!-- make this dynamic, once the table is created - then make a function and call instead of inline -->
+		<!-- make a function and call instead of inline -->
 		<div class="row">
 			<div class="col s12 l12">
 				<img class="materialboxed" id="mainImage" width="100%" src="<%=merch.img_1%>">
 			</div>
 		</div>
-
 		<div class="row">
 			<div class="col s12 l12">
-				
 				<% if (merch.img_2) { %>
 				<!-- show 1 and 2 thumbs -->
 				<img class="materialboxed1" width="28%" style="margin-right:1em; display: inline-block;" src="<%=merch.img_1%>" onclick="document.getElementById('mainImage').setAttribute('src', '<%=merch.img_1%>')">
 					<img class="materialboxed1" width="28%" style="margin-right:1em; display: inline-block;" src="<%=merch.img_2%>" onclick="document.getElementById('mainImage').setAttribute('src', '<%=merch.img_2%>')">
 				<% } %>
 				<% if (merch.img_3) { %>
-				<!-- show 3 thumb -->
 					<img class="materialboxed1" width="28%" style="margin-right:1em; display: inline-block;" src="<%=merch.img_3%>" onclick="document.getElementById('mainImage').setAttribute('src', '<%=merch.img_3%>')">
 				<% } %>
 			</div>
 		</div>
 	</div>
-	
 	<div class="col s12 l6">
 	<!-- right (details) -->
 		<h4><%=merch.item.toUpperCase()%></h4>
@@ -55,23 +49,19 @@
 				<input hidden="true" name="hiddenMerchId" id="hiddenMerchId"value="<%=merch.id%>">
 				<!-- TEMP SIZE VALUE -->
 				<input hidden="true" name="hiddenSize" id="hiddenSize" value="large">
-				<!-- <input hidden="true" name="quantity1" id="quantity1" value="1"> -->
 			</div>
 		</div>
-				<!-- if statement to see if it has sizes -->
-				<%console.log((merch.inventories[0]))%>	
+		<!-- if statement to see if it has sizes -->
+		<%console.log((merch.inventories[0]))%>	
 		<% if (merch.inventories[1]){%>		
-
 			<small>sizes: </small><br>
 			<% merch.inventories.forEach((sizes)=>{%>
 				<% if (sizes.count > 0){ %>
-					
 					<div style="line-height: 3em; width:3em;border: 1px solid black;background-color: white;border-radius: 1px;display: inline-block;text-align: center;color:black;" id="<%=sizes.size%>" class="sizeButton" onclick="sizeChange(<%=sizes.size%>)"><%=sizes.size%></div>
 					<% } else {%>
 					<div style="line-height: 3em; width:3em;border: 1px solid black;background-color: #eee;border-radius: 1px;display: inline-block;text-align: center;color:#ccc;text-decoration: line-through; overflow: hide;" id="<%=sizes.size%>" class="sizeButtonNoStock" onclick="noStock(<%=sizes.size%>)">&nbsp;&nbsp;&nbsp;<%=sizes.size%>&nbsp;&nbsp;&nbsp;</div>
 				<%}%>
 			<%})%>
-		
 		<div class="row">
 			<div class="col l12">
 				<p>
@@ -97,9 +87,21 @@
 				<%= merch.desc %>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col s12 l12">
+				<% if(!user) { %>
+					<!-- Not logged in, do nothing -->
+				<% } else { %>
+				    <% if(user.admin) { %>
+				    <!-- you're logged in, show the edit button -->
+				    	<a href="/merch/edit/<%=merch.id%>" class="left waves-effect waves-light btn grey darken-3"><i class="material-icons right">edit</i>Edit</a><br><br>
+				    	 <a href="/merch/inventory" class="left waves-effect waves-light btn grey darken-3"><i class="material-icons right">filter_none</i>Inventory</a>
+					<% } %> 
+				<% } %>
+			</div>
+		</div>
 	</div>
-</div>
-
+  </div>
   <!-- Cart Modal Structure -->
   <div id="modal_cart" class="modal bottom-sheet ">
     <div class="modal-content ">
@@ -114,7 +116,6 @@
 						<a href="http://localhost:3000/merch/<%=merch.id%>">
 							<img style="height: 50px;width:50px;" src="<%= merch.img_1 %>">
 						</a>
-						  
 					</td>
 					<td>
 						<h6 style="font-weight:600;margin: 0;color:black;"><%= merch.item %></h6>
@@ -122,7 +123,6 @@
 					<td><div style="width:20px;height:20px;border:1px solid black;background-color:<%= merch.color %>;border-radius: 3px;">
 						</div>
 					</td>
-					
 					<td>
 						$<%= merch.price/100 %>
 					</td>
@@ -150,10 +150,19 @@
       <a href="/cart" class=" waves-effect waves-green btn-flat">Check Out</a>
     </div>
   </div>
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+          
 <script type="text/javascript">
 //start with no current size
 let currentSize=''
-
 if (document.getElementById('add-item')) {
 		document.getElementById('add-item').addEventListener('click', function(e) {
 			e.preventDefault()
@@ -161,34 +170,31 @@ if (document.getElementById('add-item')) {
 			if (currentSize=='' & document.getElementsByClassName('sizeButton').length) {
 				alert('pick a size')
 			} else {
-
-				$.ajax({
-					url: 'http://localhost:3000/cart/',
-					method: 'POST',
-					data: {
-						userId: document.getElementById('hiddenUserId').getAttribute('value'),
-					    merchId: document.getElementById('hiddenMerchId').getAttribute('value'),
-					    size: document.getElementById('hiddenSize').getAttribute('value'),
-					    sleeves: document.getElementById('hiddenSleeves').getAttribute('value'),
-					    quantity: document.getElementById('quantity').getAttribute('value')
-					}
-				})
-				.success(res => {
-					console.log('success', res)
-					
-				})
-				.fail(err => {
-					console.log('fail', err)
-					// if response status is 401 then 
-					// location.href = '/auth/login'
-				})
-
-			}
-
-
-		})
-	}
-
+				<% if (!user){ %>
+					alert('not logged in')
+				<% } else { %>
+					$.ajax({
+						url: 'http://localhost:3000/cart/',
+						method: 'POST',
+						data: {
+							userId: document.getElementById('hiddenUserId').getAttribute('value'),
+						    merchId: document.getElementById('hiddenMerchId').getAttribute('value'),
+						    size: document.getElementById('hiddenSize').getAttribute('value'),
+						    sleeves: document.getElementById('hiddenSleeves').getAttribute('value'),
+						    quantity: document.getElementById('quantity').getAttribute('value'),
+						    currentCart: true
+						}
+					})
+					.success(res => {
+						console.log('success', res)
+					})
+					.fail(err => {
+						console.log('fail', err)
+					})
+			<% } %>
+		} 
+	})
+}
 function sizeChange(e){
 	let z = document.getElementsByClassName('sizeButton')
 	for (i=0;i<z.length;i++){

@@ -15,7 +15,6 @@
 			      <th>Color</th>
 			      <th>Stock</th>
 			      <th>Price</th>
-			      		      
 			      <th colspan="2" >
 			      	<!-- this button isn't functional yet, and I don't want to talk about it -->
 			      	<!-- <button class="waves-effect waves-light btn  blue-grey darken-3" style="float: right;">Update All</button> -->
@@ -24,7 +23,6 @@
 			</thead>
 			<tbody>
 				<% merch.forEach((merch)=> { %>
-				
 					<tr>
 						<td >
 							<input type="hidden" value="<%=merch.id%>" name="id">
@@ -47,7 +45,6 @@
 							<!-- draw button to open sizes modal -->
 							 <!-- Modal Trigger -->
 							  <a class="waves-effect waves-light btn modal-trigger blue-grey darken-3" href="#<%=merch.id%>">stock</a>
-
 							  <!-- Modal Structure -->
 							  <div id="<%=merch.id%>" class="modal">
 							    <div class="modal-content">
@@ -67,7 +64,7 @@
 								<!-- end modal content -->
 								<div class="modal-footer">
  								  <a href="#<%=merch.id%>" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
-							      <button href="#<%=merch.id%>" class="saveBtn modal-close waves-effect waves-green btn-flat">Save</button>
+							      <button href="#<%=merch.id%>" type="submit" class="saveBtn modal-close waves-effect waves-green btn-flat">Save</button>
 							 	 </form>
 							    </div>
 							  </div>
@@ -95,7 +92,7 @@
 								  <!-- end modal content -->
 								    <div class="modal-footer">
 								      <a href="#<%=merch.id%>" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
-							      	  <button href="#<%=merch.id%>" class="saveBtn modal-close waves-effect waves-green btn-flat">Save</button>
+							      	  <button href="#<%=merch.id%>" class="saveBtn modal-close waves-effect waves-green btn-flat" type="submit" >Save</button>
 							 	 	    </form>
 							    	  </div>
 								</td>

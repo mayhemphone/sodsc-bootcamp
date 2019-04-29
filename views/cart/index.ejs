@@ -1,4 +1,4 @@
-
+<!-- cart -->
 
 <script src="https://checkout.stripe.com/checkout.js" defer></script>
 <script>
@@ -10,6 +10,7 @@
 	      	<h4>Your Cart</h4>
 		      <table class="striped">
 			<% user.cart_items.forEach((ci)=>{%>
+
 		      	<tr class="cart-row" data-item-id="<%=ci.merch.id%>">
 					<td style="vertical-align: top;
   text-align: left;">
@@ -31,7 +32,7 @@
   text-align: left;">
 						<div class="row valign-wrapper" >
 						    <div class="input-field "style="width:4em;padding-left:1em;">
-						      <input value="1" style="width:2em;margin-right: 1em;" id="quantity" type="number" class="validate cart-quantity-input">
+						      <input value="<%=ci.quantity%>" style="width:2em;margin-right: 1em;" id="quantity" type="number" class="validate cart-quantity-input">
 						      <label class="active" for="quantity">Quantity</label>
 						  		<small>Update</small><br>
 						  		<small>Remove</small>
@@ -48,6 +49,7 @@
 		  	
 		  	<%let total = 0%>
 		  	<% user.cart_items.forEach((p)=>{ %>
+		  	<%console.log('p:', p)%>
 		  		<%total = total + p.merch.price%>
 
 			<%})%>
@@ -57,3 +59,36 @@
 		  </div>
 		</div>
     </div>
+
+    <script type="text/javascript">
+    	
+    	function moveToOrders(){
+			<% user.cart_items.forEach((cl)=>{%>
+				console.log('looping')
+				<% console.log('CL.      ', cl) %>
+				$.ajax({
+					url: 'http://localhost:3000/orders/',
+					method: 'POST',
+					data: {
+						userId: <% user.id %>,
+					    merchId: <% cl.merchId %>,
+					    size: '<% cl.size %>',
+					    sleeves: <% cl.sleeves %>,
+					    quantity: <% cl.quantity %>,
+					    order_num: Date()
+					}
+				})
+				.success(res => {
+					console.log('success', res)
+					
+				})
+				.fail(err => {
+					console.log('fail', err)
+					// if response status is 401 then 
+					// location.href = '/auth/login'
+				})
+		
+		<%})%>
+	
+		}
+    </script>

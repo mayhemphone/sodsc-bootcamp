@@ -127,37 +127,37 @@ router.put('/inventory',  adminLoggedIn, (req,res)=>{
 			size: 'none' 
 		}
 	})
-	db.inventory.update({ count : req.body['x-small']  },{ 
+	db.inventory.update({ count : req.body['xs']  },{ 
 		where : { 
 			merchId: req.body.merchId, 
 			size: 'xs' 
 		}
 	})
-	db.inventory.update({ count : req.body['small']  },{ 
+	db.inventory.update({ count : req.body['s']  },{ 
 		where : { 
 			merchId: req.body.merchId, 
 			size: 's' 
 		}
 	})
-	db.inventory.update({ count : req.body['medium']  },{ 
+	db.inventory.update({ count : req.body['m']  },{ 
 		where : { 
 			merchId: req.body.merchId, 
 			size: 'm' 
 		}
 	})
-	db.inventory.update({ count : req.body['large']  },{ 
+	db.inventory.update({ count : req.body['l']  },{ 
 		where : { 
 			merchId: req.body.merchId, 
 			size: 'l' 
 		}
 	})
-	db.inventory.update({ count : req.body['x-large']  },{ 
+	db.inventory.update({ count : req.body['xl']  },{ 
 		where : { 
 			merchId: req.body.merchId, 
 			size: 'xl' 
 		}
 	})
-	db.inventory.update({ count : req.body['xx-large']  },{ 
+	db.inventory.update({ count : req.body['xxl']  },{ 
 		where : { 
 			merchId: req.body.merchId, 
 			size: 'xxl' 

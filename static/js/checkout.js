@@ -1,10 +1,7 @@
 //STRIPE PURCHASE 
-
-
 var stripeHandler = StripeCheckout.configure({
     key: stripePublicKey,
     locale: 'auto',
-    // add other things here I think: https://stripe.com/docs/checkout
     token: (token)=>{
         var items = []
         var cartItemsContainer = document.getElementsByClassName('striped')[0]
@@ -21,7 +18,6 @@ var stripeHandler = StripeCheckout.configure({
                 id: id,
                 quantity: quantity
             })
-         
         }
         let toSend = JSON.stringify({
                 stripeTokenId: token.id,
@@ -35,7 +31,6 @@ var stripeHandler = StripeCheckout.configure({
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: `main=${toSend}`
-
           
         }).then((res)=>{
         	console.log('')
@@ -51,15 +46,13 @@ var stripeHandler = StripeCheckout.configure({
             }
             document.getElementById('order-summary').innerText =''
             cartItems.innerText = "Your order is complete! Thank you!"
-            //function to clear out database
-            //
+            
         }).catch((err) => {
             console.log('Error in POST /checkout', err)
             console.log('')
         	console.log('')
         	console.log('items with error: ',items)
           })
-
     }
 })
 
@@ -76,7 +69,6 @@ function ready() {
 }
 
 function purchaseClicked() {
-    
     var priceElement = document.getElementById('finalTotal')
     console.log(priceElement)
     var price = parseFloat(priceElement.innerText.replace('$', '')) * 100
@@ -85,3 +77,5 @@ function purchaseClicked() {
         amount: price
     })
 }
+
+

@@ -44,13 +44,15 @@ app.use((req, res, next) => {
   next()
 })
 
+let db = require('./models')
+
 // Include routes from controllers
 app.use('/auth', require('./controllers/auth'))
 app.use('/profile', require('./controllers/profile'))
 app.use('/content', require('./controllers/content'))
 app.use('/merch', require('./controllers/merch'))
 app.use('/cart', require('./controllers/cart'))
-
+app.use('/orders', require('./controllers/orders'))
 
 // Make a home route: GET /
 app.get('/', (req, res) => {
@@ -65,6 +67,9 @@ app.get('*', (req, res) => {
 
 app.post('/purchase', (req, res)=>{
   const itemsJson = JSON.parse(req.body.main)
+  console.log('')
+  console.log('')
+  console.log('itemsJson',itemsJson)
 
   stripe.charges.create({
     amount: itemsJson.total,
@@ -74,8 +79,34 @@ app.post('/purchase', (req, res)=>{
     statement_descriptor: 'SODSC MERCH',
     metadata: {order_id: 6735}
   }).then(()=>{
-    console.log('Charge Successful')
-    res.json({message: 'Successfully purchased items'})
+	    console.log('Charge Successful')
+ //   		console.log('')
+	// 	console.log('')
+	// 	console.log("REQ.BODY.SHOTS ", req.user.cart_items)
+	// 	db.orders.create({
+	// 		include: [{
+	//       		model: db.cart_items,
+	//       		include: [db.merch]
+	//   		}],
+	// 		userId: req.user.id,
+	// 		merchId: req.user.cart_items
+	// 		// size: destroyedTest.size,
+	// 		// sleeves: destroyedTest.sleeves,
+	// 		// quantity: destroyedTest.quantity
+	// 	}).then(destroyedTest=>{
+
+	// 	    db.cart_items.destroy({
+	// 			where: {userId: req.user.id}
+	// 	})
+		// })
+
+
+
+
+
+	    res.json({message: 'Successfully purchased items'})
+	    
+	    
   }).catch((err) => {
       console.log('Error in POST /reviews', err)
       res.status(500).end()
