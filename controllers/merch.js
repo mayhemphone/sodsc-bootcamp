@@ -49,7 +49,7 @@ router.post('/', function(req, res) {
 
 		} else {
 			// create 0 inventory record for default sizes
-			let defaultSizes = ['x-small','small','medium','large','x-large','xx-large']
+			let defaultSizes = ['xs','s','m','l','x','xxl']
 			// console.log(defaultSizes)
 		    async.forEach(defaultSizes, (cat, done) => {
 		      db.inventory.create({
@@ -236,7 +236,7 @@ router.put('/edit/:id',  adminLoggedIn, (req,res)=>{
 				})
 
 			// make new size records
-			let defaultSizes = ['x-small','small','medium','large','x-large','xx-large']
+			let defaultSizes = ['xs','s','m','l','xl','xxl']
 
 		    async.forEach(defaultSizes, (cat, done) => {
 		      db.inventory.create({

@@ -4,7 +4,7 @@
 		<% content.forEach((c)=>{%>
 			<div class="row">
 				<div class="col sm-12">
-					<h1><%= c.title %></h1>
+					<a href="/content/<%=c.id%>"><h1><%= c.title %></h1></a>
 					<small><%=c.description%></small><br>
 					<% if(!user) { %>
 						<!-- Not logged in, do nothing -->
