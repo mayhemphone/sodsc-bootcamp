@@ -4,24 +4,22 @@ module.exports = (sequelize, DataTypes) => {
     item: DataTypes.STRING,
     category: DataTypes.STRING,
     sex: DataTypes.STRING,
-    price: DataTypes.INTEGER,
     collection: DataTypes.STRING,
+    price: DataTypes.INTEGER,
+    desc: DataTypes.TEXT,
     pre_order: DataTypes.STRING,
     members_only: DataTypes.BOOLEAN,
-    active: DataTypes.BOOLEAN,
+    no_size: DataTypes.BOOLEAN,
     img_1: DataTypes.STRING,
     img_2: DataTypes.STRING,
     img_3: DataTypes.STRING,
-    color: DataTypes.STRING,
-    no_size: DataTypes.BOOLEAN,
-    desc: DataTypes.TEXT
+    active: DataTypes.BOOLEAN,
+    color: DataTypes.STRING
   }, {});
   merch.associate = function(models) {
     // associations can be defined here
-
     models.merch.hasMany(models.inventory)
     models.merch.hasMany(models.cart_items)
-
   };
   return merch;
 };

@@ -1,12 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const order_cart = sequelize.define('order_cart', {
+  const order_carts = sequelize.define('order_carts', {
     merchId: DataTypes.INTEGER,
     orderId: DataTypes.INTEGER,
     cutSleeves: DataTypes.BOOLEAN
   }, {});
-  order_cart.associate = function(models) {
+  order_carts.associate = function(models) {
     // associations can be defined here
   };
-  return order_cart;
+  return order_carts;
 };

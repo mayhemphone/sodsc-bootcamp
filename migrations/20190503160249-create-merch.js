@@ -1,48 +1,54 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('users', {
+    return queryInterface.createTable('merches', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstname: {
+      item: {
         type: Sequelize.STRING
       },
-      lastname: {
+      category: {
         type: Sequelize.STRING
       },
-      email: {
+      sex: {
         type: Sequelize.STRING
       },
-      password: {
+      collection: {
         type: Sequelize.STRING
       },
-      birthdate: {
-        type: Sequelize.DATE
-      },
-      bio: {
-        type: Sequelize.TEXT
-      },
-      image: {
-        type: Sequelize.TEXT
-      },
-      cell: {
+      price: {
         type: Sequelize.INTEGER
       },
-      address: {
+      desc: {
+        type: Sequelize.TEXT
+      },
+      pre_order: {
         type: Sequelize.STRING
       },
-      scoot: {
+      members_only: {
+        type: Sequelize.BOOLEAN
+      },
+      no_size: {
+        type: Sequelize.BOOLEAN
+      },
+      img_1: {
         type: Sequelize.STRING
       },
-      newsletter: {
+      img_2: {
         type: Sequelize.STRING
       },
-      animalId: {
-        type: Sequelize.INTEGER
+      img_3: {
+        type: Sequelize.STRING
+      },
+      active: {
+        type: Sequelize.BOOLEAN
+      },
+      color: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -51,14 +57,10 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      member: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('merches');
   }
 };

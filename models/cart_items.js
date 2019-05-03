@@ -5,12 +5,11 @@ module.exports = (sequelize, DataTypes) => {
     merchId: DataTypes.INTEGER,
     size: DataTypes.STRING,
     sleeves: DataTypes.BOOLEAN,
-    quantity: DataTypes.INTEGER,
-    currentCart: DataTypes.BOOLEAN
+    quantity: DataTypes.INTEGER
   }, {});
   cart_items.associate = function(models) {
     // associations can be defined here
-    models.cart_items.belongsTo(models.user)
+     models.cart_items.belongsTo(models.user)
     models.cart_items.belongsTo(models.merch)
 
   };
