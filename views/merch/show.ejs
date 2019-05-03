@@ -113,7 +113,7 @@
 		      	<tr>
 					<td>
 						<input type="hidden" value="<%=merch.id%>" name="id">
-						<a href="http://localhost:3000/merch/<%=merch.id%>">
+						<a href="/merch/<%=merch.id%>">
 							<img style="height: 50px;width:50px;" src="<%= merch.img_1 %>">
 						</a>
 					</td>
@@ -174,7 +174,7 @@ if (document.getElementById('add-item')) {
 					alert('not logged in')
 				<% } else { %>
 					$.ajax({
-						url: 'http://localhost:3000/cart/',
+						url: '/cart/',
 						method: 'POST',
 						data: {
 							userId: document.getElementById('hiddenUserId').getAttribute('value'),

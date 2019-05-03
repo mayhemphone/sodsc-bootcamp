@@ -49,14 +49,15 @@
 							  <div id="<%=merch.id%>" class="modal">
 							    <div class="modal-content">
 						    	<!-- start modal content -->
-							      <h4>Update stock:</h4><br>
+							      <h4>Update SKLFKLSDLKG:</h4><br>
 							      <form method="POST" action="/merch/inventory?_method=PUT">
 							      	<input type="hidden" value="<%=merch.id%>" name="merchId">
 							      <% merch.inventories.forEach((inv)=>{ %>
 								      <div class="row">
+								      	<p>blah</p>
 								        <div class="input-field">
 								          <input id="<%=inv.size%>" value="<%=inv.count%>" name="<%=inv.size%>" type="number" class="validate" >
-								          <label  for="category"><%=inv.size%></label>
+								          <label for="category"><%=inv.size%></label>
 								        </div>
 								      </div>
 								   <% }) %>
@@ -84,7 +85,7 @@
 							      		<input type="hidden" value="<%=merch.id%>" name="merchId">
 							      <% merch.inventories.forEach((inv)=>{ %>
 								   		<div class="input-field ">
-									    	<input id="<%=inv.size%>" value="<%=inv.count%>" name="<%=inv.size%>" type="number" class="validate " >
+									    	<input id="<%=inv.size%>" value="<%=inv.count%>" name="<%=inv.size%>" type="number" class="validate " ><label for="category"><%=inv.size%></label>
 									    </div>
 								  <%})%>
 								  	</div>
