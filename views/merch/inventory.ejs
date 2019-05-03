@@ -27,7 +27,7 @@
 						<td >
 							<input type="hidden" value="<%=merch.id%>" name="id">
 							
-							  <a href="http://localhost:3000/merch/<%=merch.id%>"><img style="height: 100px;width:100px;" src="<%= merch.img_1 %>"></a>
+							  <a href="/merch/<%=merch.id%>"><img style="height: 100px;width:100px;" src="<%= merch.img_1 %>"></a>
 							  
 						</td>
 						<td>
@@ -118,7 +118,7 @@
 				            </label>
 						</td>
 						<td>
-    						 <a href="http://localhost:3000/merch/edit/<%=merch.id%>" class="btn-floating waves-effect waves-light blue-grey darken-3"><i class="material-icons">edit</i></a>
+    						 <a href="/merch/edit/<%=merch.id%>" class="btn-floating waves-effect waves-light blue-grey darken-3"><i class="material-icons">edit</i></a>
         				</td>
 					</tr>
 				<% }) %>
